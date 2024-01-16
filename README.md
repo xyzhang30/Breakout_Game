@@ -13,7 +13,7 @@ This project implements the game of Breakout with multiple levels.
 
  * Finish Date: 
 
- * Hours Spent:
+ * Hours Spent: 1/14 (1:37-)
 
 
 

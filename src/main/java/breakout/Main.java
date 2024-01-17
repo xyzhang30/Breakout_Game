@@ -54,7 +54,7 @@ public class Main extends Application {
 
         paddle = new Paddle(SIZE / 2 - 50, SIZE - 20, 100, 10);
         ball = new Ball(SIZE / 2, SIZE - 20 - BALL_RADIUS, BALL_RADIUS, Color.LIGHTSTEELBLUE);
-        testBlock = new Brick(50,50,BLOCK_WIDTH,BLOCK_HEIGHT);
+        testBlock = new Brick(50,50,2, 0);
 
         root = new Group();
         root.getChildren().addAll(ball,paddle,testBlock);

@@ -8,5 +8,12 @@ public class LevelControl {
         this.level = level;
     }
 
+    public void reset(){
+
+    }
+
+    public void loseLive(){
+        this.lives -= 1;
+    }
 
 }

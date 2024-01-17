@@ -49,11 +49,13 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
 ## Power-up Ideas
 
- * Idea #1: adds 3 balls to clear blocks
+ * Idea #1: adds 1 ball to clear blocks (as long as there is at least one ball on the screen, if one of the two balls goes off the bottom of the screen, the player does not lose lives)
 
  * Idea #2: makes the paddle 1.5 times the original length (easier to catch the ball)
 
  * Idea #3: adds 1 extra life
+ 
+ * Idea #4: speeds up the ball (bad power up)
 
 
 ## Cheat Key Ideas
@@ -66,6 +68,9 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
  * Idea #4: clicking on S slows down the ball (easier for the player to react)
 
+ * Idea #5: clicking on R resets the current level (reset the paddle and the ball to the starting position and restart current level)
+
+ * Idea #6: clicking on P skips all levels and wins the game (show winning screen)
 
 ## Level Descriptions
 

@@ -13,6 +13,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
+
+// bugs:
+// - ball would go into the brick;
+// - after the brick is removed, it seems like the ball is still sensing and bouncing off the brick
+// - the number of hits don't match
+
+
 /**
  * Feel free to completely change this code or delete it entirely.
  *
@@ -54,7 +61,7 @@ public class Main extends Application {
 
         paddle = new Paddle(SIZE / 2 - 50, SIZE - 20, 100, 10);
         ball = new Ball(SIZE / 2, SIZE - 20 - BALL_RADIUS, BALL_RADIUS, Color.LIGHTSTEELBLUE);
-        testBlock = new Brick(50,50,2, 0);
+        testBlock = new Brick(50,50,5, 0);
 
         root = new Group();
         root.getChildren().addAll(ball,paddle,testBlock);
@@ -119,6 +126,7 @@ public class Main extends Application {
                 newBallX - BALL_RADIUS <= testBlock.getX() + testBlock.getWidth()) {
             // Bounce off the brick
             ball.setVelocityY(-ball.getVelocityY());
+            //the block is hit, remaining hits -= 1
             testBlock.gotHit();
             if (testBlock.hits == 0){
                 removeBrick(testBlock);

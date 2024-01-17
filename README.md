@@ -13,7 +13,8 @@ This project implements the game of Breakout with multiple levels.
 
  * Finish Date: 
 
- * Hours Spent: 1/14 (1:37-)
+ * Hours Spent: (including time spend trying to figure out how javafx works)
+1/14 (4-5); 1/15 (5-6); 1/16 (5-6) 
 
 
 

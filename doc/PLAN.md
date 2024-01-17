@@ -40,11 +40,11 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
 ## Block Ideas
 
- * Idea #1: Power up blocks: gives the user a random (or predetermined) power up when hit 
+ * Idea #1: __Power up blocks__: gives the user a random (or predetermined) power up when hit 
 
- * Idea #2: when a special type of block is hit, it clears all the blocks on the vertical and the horizontal line it's on
+ * Idea #2: __Cross bomb blocks__: clears all the blocks on the vertical and the horizontal line it's on when it's hit
 
- * Idea #3: blocks have different colors, corresponding to the number of times it has to be hit in order to be cleared: grey/blue = 1, green = 2, yellow/orange = 3, red = 4 
+ * Idea #3: __Multi-hit blocks__: blocks have different colors, corresponding to the number of times it has to be hit in order to be cleared: grey/blue = 1, green = 2, yellow/orange = 3, red = 4 
 
 
 ## Power-up Ideas
@@ -60,17 +60,17 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
 ## Cheat Key Ideas
 
- * Idea #1: clicking on L increases the current lives by 1
+ * Idea #1: clicking on __L__ increases the current lives by 1
 
- * Idea #2: clicking on C clears the screen and goes to the next level
+ * Idea #2: clicking on __C__ clears the screen and goes to the next level
 
- * Idea #3: clicking on a number (1-9) skips current level and goes to the corresponding level, if number pressed is bigger than the highest level, it goes to the highest level.
+ * Idea #3: clicking on __a number (1-9)__ skips current level and goes to the corresponding level, if number pressed is bigger than the highest level, it goes to the highest level.
 
- * Idea #4: clicking on S slows down the ball (easier for the player to react)
+ * Idea #4: clicking on __S__ slows down the ball (easier for the player to react)
 
- * Idea #5: clicking on R resets the current level (reset the paddle and the ball to the starting position and restart current level)
+ * Idea #5: clicking on __R__ resets the current level (reset the paddle and the ball to the starting position and restart current level)
 
- * Idea #6: clicking on P skips all levels and wins the game (show winning screen)
+ * Idea #6: clicking on __P__ skips all levels and wins the game (show winning screen)
 
 ## Level Descriptions
 
@@ -132,16 +132,16 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
 ## Class Ideas
 
- * Idea #1: Ball class: has all the information about the ball itself, includes it's x and y coordinates, radius, etc.
-   * getVelocityX(), getVelocityY(), setVelocityX(), setVelocityY() methods would be included in this class to get or set the velocity of the ball, mainly used for bouncing off of walls, bricks, and the paddle.
+ * Idea #1: __Ball class__: has all the information about the ball itself, includes it's x and y coordinates, radius, etc.
+   * _getVelocityX()_, _getVelocityY()_, _setVelocityX()_, _setVelocityY()_ methods would be included in this class to get or set the velocity of the ball, mainly used for bouncing off of walls, bricks, and the paddle.
 
- * Idea #2: Block class: has properties of different blocks, used to generate the blocks on the screen after reading in the level block layout from a file
-   * getType(), cleared() should be methods in this class. Cleared checks for whether this block is hit/is hit enough times to be removed, and getType gets the type of the block, in order to determine how many hits are needed to clear it, and whether to drop a power up when cleared
+ * Idea #2: __Block class__: has properties of different blocks, used to generate the blocks on the screen after reading in the level block layout from a file
+   * _getType()_, _cleared()_ should be methods in this class. Cleared checks for whether this block is hit/is hit enough times to be removed, and getType gets the type of the block, in order to determine how many hits are needed to clear it, and whether to drop a power up when cleared
 
- * Idea #3: Paddle class: includes the paddle
-   * move() would be a method in this class to get the 
+ * Idea #3: __Paddle class__: includes the paddle
+   * _move()_ would be a method in this class to get the 
 
- * Idea #4: LevelControl class: includes the information of the game: current level, current lives, etc.
-   * setLevel(), nextLevel() and loseLife() would be methods in this class. NextLevel() increases the level number by 1 once the current level is cleared; SetLevel() skips to the level specified in the parameter when a cheatkey is pressed; loseLife() decrease the lives by 1, called when the ball goes off the bottom of the screen.
+ * Idea #4: __LevelControl class__: includes the information of the game: current level, current lives, etc.
+   * _setLevel()_, _nextLevel()_ and _loseLife()_ would be methods in this class. NextLevel() increases the level number by 1 once the current level is cleared; SetLevel() skips to the level specified in the parameter when a cheatkey is pressed; loseLife() decrease the lives by 1, called when the ball goes off the bottom of the screen.
 
 

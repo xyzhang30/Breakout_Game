@@ -1,4 +1,4 @@
-[# Breakout Plan
+# Breakout Plan
 ### Alisha Zhang
 
 #### Examples
@@ -26,16 +26,16 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
 ## Interesting Breakout Variants
 
- * Idea #1: Bricks n Balls: this is probably a biased answer, but I really like bricks n balls and I used to have the exact same app shown on the youtube video on my phone. (I got to the mid-300s, and was stuck on one level for several months so I deleted the game) I like this variant because, especially for harder levels, the player has to really think about and "plan" which blocks to hit first, and aim for a correct angle that maximizes the bounces of the ball.
+ * Idea #1: Bricks n Balls: this is probably a biased answer, but I really like bricks n balls and I used to have the exact same app shown on the youtube video on my phone. I like this variant because, especially for harder levels, the player has to really think about and "plan" which blocks to hit first, and aim for a correct angle that maximizes the bounces of the ball.
 
- * Idea #2: 
+ * Idea #2: Brick Breaker Hero: I think this one is interesting because it puts the relatively simple game of breaking bricks with a ball into a context with character and plot setting, with more visual varieties. The boss in each level also add an interesting and attention catching point for the player.
 
 
 ## Paddle Ideas
 
- * Idea #1: "catching" the ball when it hits the paddle and releasing it at a later time when a certain power up is acquired
+ * Idea #1: "catching" the ball when it hits the paddle and releasing it when user clicks again on the screen. The user can move the ball with the paddle with it's sticking on it. Triggered by a power up
 
- * Idea #2: 
+ * Idea #2: the middle part of the paddle bounces normally, the left and right thirds cause the ball to bounce back in the direction it came
 
 
 ## Block Ideas
@@ -44,9 +44,7 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
  * Idea #2: when a special type of block is hit, it clears all the blocks on the vertical and the horizontal line it's on
 
- * Idea #3: triangle shaped blocks
-
- * Idea #4: blocks have different colors, corresponding to the number of times it has to be hit in order to be cleared: grey/blue = 1, green = 2, yellow/orange = 3, red = 4 
+ * Idea #3: blocks have different colors, corresponding to the number of times it has to be hit in order to be cleared: grey/blue = 1, green = 2, yellow/orange = 3, red = 4 
 
 
 ## Power-up Ideas
@@ -130,15 +128,15 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 ## Class Ideas
 
  * Idea #1: Ball class: has all the information about the ball itself, includes it's x and y coordinates, radius, etc.
-   * getX(), getY(), setX(), setY() methods would be included in this class to get or set the position of the ball. Will be used in a step() method elsewhere for animation
+   * getVelocityX(), getVelocityY(), setVelocityX(), setVelocityY() methods would be included in this class to get or set the velocity of the ball, mainly used for bouncing off of walls, bricks, and the paddle.
 
- * Idea #2: Brick class: has properties of different blocks, used to generate the blocks on the screen after reading in the level block layout from a file
+ * Idea #2: Block class: has properties of different blocks, used to generate the blocks on the screen after reading in the level block layout from a file
    * getType(), cleared() should be methods in this class. Cleared checks for whether this block is hit/is hit enough times to be removed, and getType gets the type of the block, in order to determine how many hits are needed to clear it, and whether to drop a power up when cleared
 
- * Idea #3: Game class: controls the entire flow of the game: when to deduct/add lives, when to move on to the next level, etc.
-   * goToLevel() is a method in this class. It would be called when all blocks are cleared, or a cheat key for skip level is pressed, it will call controller to switch the level.
+ * Idea #3: Paddle class: includes the paddle
+   * move() would be a method in this class to get the 
 
- * Idea #4: Controller class: includes the information of the game: current level, current lives, etc.
-   * incrementLevel() would be a method in this class, to increase the level number by 1 once the current level is cleared.
+ * Idea #4: LevelControl class: includes the information of the game: current level, current lives, etc.
+   * setLevel(), nextLevel() and loseLife() would be methods in this class. NextLevel() increases the level number by 1 once the current level is cleared; SetLevel() skips to the level specified in the parameter when a cheatkey is pressed; loseLife() decrease the lives by 1, called when the ball goes off the bottom of the screen.
 
 

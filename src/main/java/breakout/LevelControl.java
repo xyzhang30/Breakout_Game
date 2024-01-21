@@ -35,7 +35,9 @@ public class LevelControl {
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
     private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelThreeBricks";
     public static final Color BACKGROUND = new Color(0.3,0.3,0.3,1);
-
+    public static final int LEVEL_FONT_SIZE = 20;
+    public static final int LEVEL_TEXT_Y_OFFSET = 20;
+    public static final int LEVEL_TEXT_X_OFFSET = 10;
 
 
     public LevelControl(int level){
@@ -74,10 +76,10 @@ public class LevelControl {
         levelDisplay = new Text();
         levelDisplay.setText(completeDisplayText);
         levelDisplay.setFill(Color.BLACK);
-        levelDisplay.setFont(new Font(20));
+        levelDisplay.setFont(new Font(LEVEL_FONT_SIZE));
 
-        levelDisplay.setX(20);
-        levelDisplay.setY(20);
+        levelDisplay.setX(LEVEL_TEXT_X_OFFSET);
+        levelDisplay.setY(LEVEL_TEXT_Y_OFFSET);
     }
 
     public void setLivesDisplay(){
@@ -89,10 +91,10 @@ public class LevelControl {
         livesDisplay = new Text();
         livesDisplay.setText(completeDisplayText);
         livesDisplay.setFill(Color.BLACK);
-        livesDisplay.setFont(new Font(20));
+        livesDisplay.setFont(new Font(LEVEL_FONT_SIZE));
 
         livesDisplay.setLayoutX(scene.getWidth() - livesDisplay.getLayoutBounds().getWidth() - 10);
-        livesDisplay.setLayoutY(20);
+        livesDisplay.setLayoutY(LEVEL_TEXT_Y_OFFSET);
 
     }
 

@@ -5,26 +5,28 @@ import javafx.scene.shape.Circle;
 
 
 public class Ball extends Circle {
-    int velocityX = Main.SPEED;
-    int velocityY = Main.SPEED;
+    private double velocityX;
+    private double velocityY;
 
-    public Ball(double centerX, double CenterY, double radius, Color color) {
+    public Ball(double centerX, double CenterY, double radius, Color color, double velocityX, double velocityY) {
         super(centerX,CenterY,radius,color);
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
     }
 
-    public void setVelocityY(int newYvel) {
+    public void setVelocityY(double newYvel) {
         this.velocityY = newYvel;
     }
 
-    public void setVelocityX(int newXvel){
+    public void setVelocityX(double newXvel){
         this.velocityX = newXvel;
     }
 
-    public int getVelocityX(){
+    public double getVelocityX(){
         return this.velocityX;
     }
 
-    public int getVelocityY(){
+    public double getVelocityY(){
         return this.velocityY;
     }
 

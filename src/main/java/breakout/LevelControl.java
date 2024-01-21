@@ -28,7 +28,7 @@ public class LevelControl {
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
     public static final int BRICK_BORDER_WIDTH = 1;
-    public static final int SIZE = 548; //size of the screen
+    public static final int SIZE = 540; //size of the screen
     public static final double SPEED = 200; //initial speed of ball
     public static final int BALL_RADIUS = 10;
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
@@ -113,8 +113,8 @@ public class LevelControl {
                 String[] row = line.split(" ");
                 for (int i = 0; i < row.length; i ++){
                     if (!row[i].equals("0")) {
-                        int brickX = i*(BRICK_WIDTH + BRICK_BORDER_WIDTH); //the width of bricks to its left + their borders
-                        int brickY = rowCount*(BRICK_HEIGHT + BRICK_BORDER_WIDTH);
+                        int brickX = i*BRICK_WIDTH; //the width of bricks to its left + their borders
+                        int brickY = rowCount*BRICK_HEIGHT;
                         int numHits =  Integer.parseInt(row[i]);
                         Brick newBrick = new Brick(brickX, brickY, numHits);
                         Color brickColor = newBrick.getBrickColor(numHits, level);
@@ -163,5 +163,53 @@ public class LevelControl {
     public boolean levelCleared(){
         return brickList.isEmpty();
     }
+
+    public Ball getBall(){
+        return ball;
+    }
+
+    public void checkBallPaddleCollision(double secondDelay){
+        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
+        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+        if (newBallY + BALL_RADIUS >= paddle.getY() &&
+                newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight() &&
+                newBallX + BALL_RADIUS >= paddle.getX() &&
+                newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()){
+            ball.bounceY();
+        }
+    }
+
+//    public void checkBallBrickCollision(double secondDelay){
+//        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
+//        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+//        for (Brick brick : brickList) {
+//            if (newBallY + BALL_RADIUS >= brick.getY() &&
+//                    newBallY - BALL_RADIUS <= brick.getY() + Brick.BRICK_HEIGHT &&
+//                    newBallX + BALL_RADIUS >= brick.getX() &&
+//                    newBallX - BALL_RADIUS <= brick.getX() + Brick.BRICK_WIDTH) {
+//                handleBrickCollision(brick);
+//                // Update the ball's position based on the new velocity after collision
+//                newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
+//                newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+//            }
+//        }
+//
+//    }
+
+//    private void handleBrickCollision(Brick brick) {
+//        // Calculate the normal vector of the brick's surface
+//        double brickCenterX = brick.getX() + Brick.BRICK_WIDTH / 2.0;
+//        double brickCenterY = brick.getY() + Brick.BRICK_HEIGHT / 2.0;
+//        double deltaX = ball.getCenterX() - brickCenterX;
+//        double deltaY = ball.getCenterY() - brickCenterY;
+//
+//        // Calculate the dot product of the ball's velocity vector and the normal vector
+//        double dotProduct = deltaX * ball.getVelocityX() + deltaY * ball.getVelocityY();
+//
+//        // Reflect the velocity vector based on the normal vector
+//        ball.setVelocityX(ball.getVelocityX() - 2 * dotProduct * deltaX);
+//        ball.setVelocityY(ball.getVelocityY() - 2 * dotProduct * deltaY);
+//    }
+
 
 }

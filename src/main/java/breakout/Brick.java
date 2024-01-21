@@ -18,7 +18,7 @@ public class Brick extends Rectangle {
         this.setFill(Color.GREY);
         this.setStroke(Color.BLACK); // Border color
         this.setStrokeWidth(BRICK_BORDER_WIDTH); // Border width
-        this.setStrokeType(StrokeType.OUTSIDE); // Border position
+        this.setStrokeType(StrokeType.INSIDE); // Border position
 
 //        this.powerupType = powerupType;
     }

@@ -30,13 +30,28 @@ public class Ball extends Circle {
         return this.velocityY;
     }
 
-    public void move(){
+    public void move(double secondDelay) {
+        setCenterX(getCenterX() + velocityX * secondDelay);
+        setCenterY(getCenterY() + velocityY * secondDelay);
 
+        if (getCenterX() - getRadius() <= 0 || getCenterX() + getRadius() >= LevelControl.SIZE) {
+            bounceX();
+        }
+        if (getCenterY() - getRadius() <= 0) {
+            bounceY();
+        }
     }
 
     public void resetBall(){
 
     }
 
+    public void bounceX(){
+        velocityX = -velocityX;
+    }
+
+    public void bounceY(){
+        velocityY = -velocityY;
+    }
 
 }

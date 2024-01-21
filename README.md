@@ -2,9 +2,7 @@
 ## Alisha Zhang
 ## finished January 23, 2024
 
-
 DO NO FORK THIS REPOSITORY, clone it directly to your computer.
-
 
 This project implements the game of Breakout with multiple levels.
 
@@ -15,7 +13,7 @@ This project implements the game of Breakout with multiple levels.
  * Finish Date: 
 
  * Hours Spent: (including time spend trying to figure out how javafx works)
-1/14 (4-5); 1/15 (5-6); 1/16 (5-6); 1/19 (6-7)
+1/14 (4-5); 1/15 (5-6); 1/16 (5-6); 1/19 (6-7); 1/20(8)
 
 
 
@@ -28,7 +26,10 @@ This project implements the game of Breakout with multiple levels.
 
  * Resources used directly (including AI assistance)
    * El Capitan spinning beachball GIF by madebyjw.com -- https://gfycat.com/rapidathleticilladopsis
+   * [JavaFX API documentation](https://openjfx.io/javadoc/17/)
    * [Reading files in java](https://www.digitalocean.com/community/tutorials/java-read-file-line-by-line)
+   * [Color Palette](https://www.color-hex.com/color-palettes/)
+
 
 ### Running the Program
 

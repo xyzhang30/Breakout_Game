@@ -42,6 +42,12 @@ public class GameControl {
 
     private void step(double secondDelay) {
         //go to next level if current level cleared
+
+        //add check for step pause (for splash screen), turn on pause after a level is passed, and turn off pause on mouse click
+
+        levelControl.getBall().move(secondDelay);
+        levelControl.checkBallPaddleCollision(secondDelay);
+
         if (levelControl.levelCleared()){
             nextLevel();
             levelControl = new LevelControl(this.level);

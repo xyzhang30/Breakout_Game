@@ -30,8 +30,6 @@ public class Main extends Application {
     // useful names for constant values used
 //    public static final String TITLE = "Breakout Game"; //changed page title
     public static final Color DUKE_BLUE = new Color(0, 0.188, 0.529, 1);
-//    public static final Color BACKGROUND = new Color(0.3,0.3,0.3,1);
-//    public static final int SIZE = 500; //size of the screen
 //    public static final double SPEED = 200; //initial speed of ball
 //    public static final int FRAMES_PER_SECOND = 60;
 //    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -40,8 +38,6 @@ public class Main extends Application {
 //    public static final int PADDLE_WIDTH = 100;
 //    public static final int PADDLE_HEIGHT = 10;
 //    public static final int BALL_RADIUS = 10;
-//    public Ball ball;
-//    public Paddle paddle;
 //    public Brick testBlock;
     private boolean isFirstClick = false;
 //    public Group root;

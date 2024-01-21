@@ -33,7 +33,7 @@ public class LevelControl {
     public static final int BALL_RADIUS = 10;
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
-    private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
+    private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelThreeBricks";
     public static final Color BACKGROUND = new Color(0.3,0.3,0.3,1);
 
 
@@ -86,14 +86,16 @@ public class LevelControl {
                     if (!row[i].equals("0")) {
                         int brickX = i*(BRICK_WIDTH + BRICK_BORDER_WIDTH); //the width of bricks to its left + their borders
                         int brickY = rowCount*(BRICK_HEIGHT + BRICK_BORDER_WIDTH);
-                        Brick newBrick = new Brick(brickX, brickY, Integer.parseInt(row[i]));
+                        int numHits =  Integer.parseInt(row[i]);
+                        Brick newBrick = new Brick(brickX, brickY, numHits);
+                        Color brickColor = newBrick.getBrickColor(numHits, level);
+                        newBrick.setFill(brickColor);
                         root.getChildren().add(newBrick);
                         brickList.add(newBrick);
                     }
                 }
                 rowCount ++;
             }
-
             scanner.close();
         } catch (FileNotFoundException e) {
 //            throw new RuntimeException(e);

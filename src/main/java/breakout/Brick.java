@@ -23,8 +23,10 @@ public class Brick extends Rectangle {
 //        this.powerupType = powerupType;
     }
 
-    public void gotHit(){
+    public void gotHit(int level){
         this.hits -= 1;
+        Color newColor = getBrickColor(this.hits-1, level);
+        this.setFill(newColor);
     }
 
     public Color getBrickColor(int hits, int level){
@@ -35,7 +37,7 @@ public class Brick extends Rectangle {
                 case 2 -> Color.web("63a69f");
                 case 3 -> Color.web("1f7a8c");
                 case 4 -> Color.web("03254c");
-                default -> throw new IllegalStateException("Unexpected value: " + hits);
+                default -> Color.web("000000",0);
             };
         }
         if (level == 2){
@@ -44,7 +46,7 @@ public class Brick extends Rectangle {
                 case 2 -> Color.web("b95b7f");
                 case 3 -> Color.web("6a3556");
                 case 4 -> Color.web("360e22");
-                default -> throw new IllegalStateException("Unexpected value: " + hits);
+                default -> Color.web("000000",0);
             };
         }
         if (level == 3){
@@ -53,7 +55,7 @@ public class Brick extends Rectangle {
                 case 2 -> Color.web("dca7a3");
                 case 3 -> Color.web("e69580");
                 case 4 -> Color.web("ff7c52");
-                default -> throw new IllegalStateException("Unexpected value: " + hits);
+                default -> Color.web("000000",0);
             };
         }
         return Color.GREY;

@@ -3,6 +3,7 @@ package breakout;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class LevelControl {
     private Group root;
     private int lives;
     private Text livesDisplay;
+    private Text levelDisplay;
     private List<Brick> brickList; //a list of all the blocks in current level
     private Scene scene;
 
@@ -26,10 +28,8 @@ public class LevelControl {
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
     public static final int BRICK_BORDER_WIDTH = 1;
-
     public static final int SIZE = 548; //size of the screen
     public static final double SPEED = 200; //initial speed of ball
-
     public static final int BALL_RADIUS = 10;
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
@@ -44,13 +44,13 @@ public class LevelControl {
         this.paddle = new Paddle(SIZE / 2 - 50, SIZE - 20, 100, 10);
         this.ball = new Ball(SIZE / 2, SIZE - 20 - BALL_RADIUS, BALL_RADIUS, Color.LIGHTSTEELBLUE, SPEED, SPEED);
         this.lives = 5;
-        scene = new Scene(root, SIZE, SIZE, BACKGROUND);
-//        double translationX = (SIZE - (BRICK_WIDTH+BRICK_BORDER_WIDTH) * 9) / 2.0;
-//        root.setTranslateX(translationX);
+        this.scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 
         readBrickFormation(level);
-        getLivesDisplay();
-        root.getChildren().addAll(ball,paddle,livesDisplay);
+        setLevelDisplay(level);
+        setLivesDisplay();
+
+        root.getChildren().addAll(ball,paddle,livesDisplay,levelDisplay);
 //        System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
     }
 
@@ -66,11 +66,38 @@ public class LevelControl {
         this.lives += 1;
     }
 
-    public Text getLivesDisplay(){
+    public void setLevelDisplay(int level){
+        String displayText = "Level ";
+        String levelText = Integer.toString(level);
+        String completeDisplayText = displayText.concat(levelText);
+
+        levelDisplay = new Text();
+        levelDisplay.setText(completeDisplayText);
+        levelDisplay.setFill(Color.BLACK);
+        levelDisplay.setFont(new Font(20));
+
+        levelDisplay.setX(20);
+        levelDisplay.setY(20);
+    }
+
+    public void setLivesDisplay(){
         //get the text node to display lives on the level screen
+        String displayText = "Lives Remaining: ";
+        String livesText = Integer.toString(this.lives);
+        String completeDisplayText = displayText.concat(livesText);
+
         livesDisplay = new Text();
-        livesDisplay.setText(Integer.toString(lives));
-        return livesDisplay;
+        livesDisplay.setText(completeDisplayText);
+        livesDisplay.setFill(Color.BLACK);
+        livesDisplay.setFont(new Font(20));
+
+        livesDisplay.setLayoutX(scene.getWidth() - livesDisplay.getLayoutBounds().getWidth() - 10);
+        livesDisplay.setLayoutY(20);
+
+    }
+
+    public void setLevelDisplay(){
+
     }
 
     public void readBrickFormation(int level){
@@ -96,7 +123,6 @@ public class LevelControl {
                 }
                 rowCount ++;
             }
-            scanner.close();
         } catch (FileNotFoundException e) {
 //            throw new RuntimeException(e);
             e.printStackTrace();

@@ -40,7 +40,7 @@ public class Brick extends Rectangle {
                 default -> Color.web("000000",0);
             };
         }
-        if (level == 2){
+        else if (level == 2){
             return switch (hits) {
                 case 1 -> Color.web("ffc9d7");
                 case 2 -> Color.web("b95b7f");
@@ -49,7 +49,7 @@ public class Brick extends Rectangle {
                 default -> Color.web("000000",0);
             };
         }
-        if (level == 3){
+        else if (level == 3){
             return switch (hits) {
                 case 1 -> Color.web("ffe5d2");
                 case 2 -> Color.web("dca7a3");
@@ -58,7 +58,8 @@ public class Brick extends Rectangle {
                 default -> Color.web("000000",0);
             };
         }
-        return Color.GREY;
+        return Color.web("000000",0);
     }
+
 
 }

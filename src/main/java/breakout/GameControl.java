@@ -53,6 +53,7 @@ public class GameControl {
 
     public void nextLevel(){
         this.level += 1;
+//        this.levelControl.setLevelDisplay(this.level);
     }
 
     public void setLevel(int level){

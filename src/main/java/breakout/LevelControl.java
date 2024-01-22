@@ -33,26 +33,26 @@ public class LevelControl {
 
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
-    public static final int BRICK_BORDER_WIDTH = 1;
-    public static final int SIZE = 540; //size of the screen
-    public static final double SPEED = 200; //initial speed of ball
-    public static final int BALL_RADIUS = 10;
+    private static final int BRICK_BORDER_WIDTH = 1;
+    private static final int SIZE = 540; //size of the screen
+    private static final double SPEED = 200; //initial speed of ball
+    private static final int BALL_RADIUS = 10;
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
     private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelThreeBricks";
-    public static final Color BACKGROUND = new Color(0.3,0.3,0.3,1);
-    public static final int LEVEL_FONT_SIZE = 20;
-    public static final int LEVEL_TEXT_Y_OFFSET = 20;
-    public static final int LEVEL_TEXT_X_OFFSET = 10;
-    public static final int PADDLE_INITIAL_X = SIZE/2-50;
-    public static final int PADDLE_INITIAL_Y = SIZE - 20;
+    private static final Color BACKGROUND = new Color(0.3,0.3,0.3,1);
+    private static final int LEVEL_FONT_SIZE = 20;
+    private static final int LEVEL_TEXT_Y_OFFSET = 20;
+    private static final int LEVEL_TEXT_X_OFFSET = 10;
+    private static final int PADDLE_INITIAL_X = SIZE/2-50;
+    private static final int PADDLE_INITIAL_Y = SIZE - 20;
     private static final int PADDLE_WIDTH = 100;
     private static final int PADDLE_HEIGHT = 10;
     private static final int BALL_INITIAL_X = SIZE / 2;
     private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
     private static final Color BALL_COLOR = Color.LIGHTSTEELBLUE;
     private static final double PADDLE_SPEED = 15.0; // Adjust the speed as needed
-    private static final int LIVES_PER_LEVEL = 2;
+    private static final int LIVES_PER_LEVEL = 10;
 
     public LevelControl(int level){
         this.root = new Group();
@@ -162,15 +162,19 @@ public class LevelControl {
                 String line = scanner.nextLine();
                 String[] row = line.split(" ");
                 for (int i = 0; i < row.length; i ++){
-                    if (!row[i].equals("0")) {
-                        int brickX = i*BRICK_WIDTH; //the width of bricks to its left + their borders
-                        int brickY = rowCount*BRICK_HEIGHT;
-                        int numHits =  Integer.parseInt(row[i]);
-                        Brick newBrick = new Brick(brickX, brickY, numHits);
-                        Color brickColor = newBrick.getBrickColor(numHits, level);
-                        newBrick.setFill(brickColor);
-                        root.getChildren().add(newBrick);
-                        brickList.add(newBrick);
+                    if (!row[i].equals("0") && !row[i].isEmpty()) {
+                        try {
+                            int brickX = i * BRICK_WIDTH; //the width of bricks to its left + their borders
+                            int brickY = rowCount * BRICK_HEIGHT;
+                            int numHits = Integer.parseInt(row[i]);
+                            Brick newBrick = new Brick(brickX, brickY, numHits);
+                            Color brickColor = newBrick.getBrickColor(numHits, level);
+                            newBrick.setFill(brickColor);
+                            root.getChildren().add(newBrick);
+                            brickList.add(newBrick);
+                        } catch (NumberFormatException e){
+                            e.printStackTrace();
+                        }
                     }
                 }
                 rowCount ++;

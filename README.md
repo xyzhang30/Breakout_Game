@@ -10,11 +10,17 @@ This project implements the game of Breakout with multiple levels.
 
  * Start Date: January 13, 2024
 
- * Finish Date: 
+ * Finish Date: January 23, 2024
 
  * Hours Spent: (including time spend trying to figure out how javafx works)
-1/14 (4-5); 1/15 (5-6); 1/16 (5-6); 1/19 (6-7); 1/20(8)
-
+1/14 (4-5); 
+1/15 (5-6); 
+1/16 (5-6); 
+1/19 (6-7); 
+1/20(8); 
+1/21 (9-10);
+1/22
+1/23
 
 
 ### Attributions

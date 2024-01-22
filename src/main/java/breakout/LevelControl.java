@@ -2,6 +2,7 @@ package breakout;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -27,6 +28,7 @@ public class LevelControl {
     private Scene scene;
     private boolean leftKeyPressed = false;
     private boolean rightKeyPressed = false;
+    private boolean pauseGame = false;
 
 
     private static final int BRICK_WIDTH = 60;
@@ -49,15 +51,15 @@ public class LevelControl {
     private static final int BALL_INITIAL_X = SIZE / 2;
     private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
     private static final Color BALL_COLOR = Color.LIGHTSTEELBLUE;
-    private static final double PADDLE_SPEED = 5.0; // Adjust the speed as needed
-
+    private static final double PADDLE_SPEED = 15.0; // Adjust the speed as needed
+    private static final int LIVES_PER_LEVEL = 2;
 
     public LevelControl(int level){
         this.root = new Group();
         this.brickList = new ArrayList<>();
         this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED);
         this.ball = new Ball(BALL_INITIAL_X, BALL_INITIAL_Y, BALL_RADIUS, BALL_COLOR, SPEED, SPEED);
-        this.lives = 5;
+        this.lives = LIVES_PER_LEVEL;
         this.scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 
         readBrickFormation(level);
@@ -78,21 +80,23 @@ public class LevelControl {
             case RIGHT:
                 rightKeyPressed = false;
                 break;
-            // Add other key release events as needed
         }
-//        if (!leftKeyPressed && !rightKeyPressed) {
-//            paddle.stop();
-//        }
     }
 
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case LEFT:
-                paddle.moveLeft();
+                if (!getPauseGame()) {
+                    paddle.moveLeft();
+                }
                 break;
             case RIGHT:
-                paddle.moveRight();
+                if (!getPauseGame()) {
+                    paddle.moveRight();
+                }
                 break;
+            case SPACE:
+                setPauseGame(!getPauseGame());
         }
     }
 
@@ -266,5 +270,21 @@ public class LevelControl {
             return true;
         }
         return false;
+    }
+
+    public int getLives(){
+        return lives;
+    }
+
+    public boolean spacePressed(KeyEvent keyEvent) {
+        return keyEvent.getCode() == KeyCode.SPACE;
+    }
+
+    public boolean getPauseGame(){
+        return pauseGame;
+    }
+
+    public void setPauseGame(boolean newPauseGame){
+        pauseGame = newPauseGame;
     }
 }

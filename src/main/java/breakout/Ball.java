@@ -8,6 +8,12 @@ public class Ball extends Circle {
     private double velocityX;
     private double velocityY;
 
+    public static final int SIZE = 540; //size of the screen
+    public static final int BALL_RADIUS = 10;
+    private static final int BALL_INITIAL_X = SIZE / 2;
+    private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
+
+
     public Ball(double centerX, double CenterY, double radius, Color color, double velocityX, double velocityY) {
         super(centerX,CenterY,radius,color);
         this.velocityX = velocityX;
@@ -43,7 +49,8 @@ public class Ball extends Circle {
     }
 
     public void resetBall(){
-
+        this.setCenterX(BALL_INITIAL_X);
+        this.setCenterY(BALL_INITIAL_Y);
     }
 
     public void bounceX(){

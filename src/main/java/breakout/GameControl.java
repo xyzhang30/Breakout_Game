@@ -14,6 +14,7 @@ public class GameControl {
     private int level;
     private Stage stage;
     private Timeline animation;
+    private boolean pauseGame = false;
 
     public static final String TITLE = "Breakout Game";
     public static final int FRAMES_PER_SECOND = 60;
@@ -44,17 +45,23 @@ public class GameControl {
         //go to next level if current level cleared
 
         //add check for step pause (for splash screen), turn on pause after a level is passed, and turn off pause on mouse click
+//        while (!pauseGame) {
 
-        levelControl.getBall().move(secondDelay);
-        levelControl.checkBallPaddleCollision(secondDelay);
+            levelControl.getBall().move(secondDelay);
+            levelControl.checkBallPaddleCollision(secondDelay, this.level);
+            if (levelControl.checkBallMissed(secondDelay)) {
+                levelControl.loseLive();
+                pauseGame = true;
+            }
 
-        if (levelControl.levelCleared()){
-            nextLevel();
-            levelControl = new LevelControl(this.level);
-        }
-        if (finishedLastLevel()){
-            handleGameWon();
-        }
+            if (levelControl.levelCleared()) {
+                nextLevel();
+                levelControl = new LevelControl(this.level);
+            }
+            if (finishedLastLevel()) {
+                handleGameWon();
+            }
+//        }
     }
 
     public void nextLevel(){

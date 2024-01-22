@@ -5,11 +5,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 
 public class Paddle extends Rectangle {
-    public static final int PADDLE_WIDTH = 100;
-    public static final int PADDLE_HEIGHT = 10;
     private double paddleX; // Initial X-coordinate of the paddle
 
-    public Paddle(int Xupperleft, int Yupperleft, int paddleWidth, int paddleHeight){
+    public static final int SIZE = 540; //size of the screen
+    public static final int PADDLE_INITIAL_X = SIZE/2-50;
+    public static final int PADDLE_INITIAL_Y = SIZE - 20;
+//    private static final int PADDLE_WIDTH = 100;
+//    private static final int PADDLE_HEIGHT = 10;
+
+
+    public Paddle(double Xupperleft, double Yupperleft, int paddleWidth, int paddleHeight){
         super(Xupperleft, Yupperleft, paddleWidth, paddleHeight);
         this.paddleX = Xupperleft;
     }
@@ -21,6 +26,11 @@ public class Paddle extends Rectangle {
 //            setX(newX);
 //        }
 //    }
+
+    public void resetPaddle(){
+        this.setX(PADDLE_INITIAL_X);
+        this.setY(PADDLE_INITIAL_Y);
+    }
 
     public double getInitialX(){
         return paddleX;

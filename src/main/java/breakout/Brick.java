@@ -25,8 +25,13 @@ public class Brick extends Rectangle {
 
     public void gotHit(int level){
         this.hits -= 1;
-        Color newColor = getBrickColor(this.hits-1, level);
-        this.setFill(newColor);
+        if(hits == 0){
+            this.setStroke(Color.TRANSPARENT);
+            this.setFill(Color.TRANSPARENT);
+        } else {
+            Color newColor = getBrickColor(hits, level);
+            this.setFill(newColor);
+        }
     }
 
     public Color getBrickColor(int hits, int level){

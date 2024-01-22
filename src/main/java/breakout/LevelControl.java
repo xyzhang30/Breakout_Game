@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,13 +39,20 @@ public class LevelControl {
     public static final int LEVEL_FONT_SIZE = 20;
     public static final int LEVEL_TEXT_Y_OFFSET = 20;
     public static final int LEVEL_TEXT_X_OFFSET = 10;
+    public static final int PADDLE_INITIAL_X = SIZE/2-50;
+    public static final int PADDLE_INITIAL_Y = SIZE - 20;
+    private static final int PADDLE_WIDTH = 100;
+    private static final int PADDLE_HEIGHT = 10;
+    private static final int BALL_INITIAL_X = SIZE / 2;
+    private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
+    private static final Color BALL_COLOR = Color.LIGHTSTEELBLUE;
 
 
     public LevelControl(int level){
         this.root = new Group();
         this.brickList = new ArrayList<>();
-        this.paddle = new Paddle(SIZE / 2 - 50, SIZE - 20, 100, 10);
-        this.ball = new Ball(SIZE / 2, SIZE - 20 - BALL_RADIUS, BALL_RADIUS, Color.LIGHTSTEELBLUE, SPEED, SPEED);
+        this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT);
+        this.ball = new Ball(BALL_INITIAL_X, BALL_INITIAL_Y, BALL_RADIUS, BALL_COLOR, SPEED, SPEED);
         this.lives = 5;
         this.scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 
@@ -62,6 +70,14 @@ public class LevelControl {
 
     public void loseLive(){
         this.lives -= 1;
+        System.out.println("lives -= 1 finished");
+        updateLivesDisplay();
+    }
+
+    private void updateLivesDisplay() {
+        root.getChildren().remove(livesDisplay);
+        setLivesDisplay();
+        root.getChildren().add(livesDisplay);
     }
 
     public void increaseLife(){
@@ -95,7 +111,6 @@ public class LevelControl {
 
         livesDisplay.setLayoutX(scene.getWidth() - livesDisplay.getLayoutBounds().getWidth() - 10);
         livesDisplay.setLayoutY(LEVEL_TEXT_Y_OFFSET);
-
     }
 
     public void setLevelDisplay(){
@@ -146,6 +161,10 @@ public class LevelControl {
         };
     }
 
+    public void removeBrickItor(Iterator<Brick> iter){
+        iter.remove();
+    }
+
     public void removeBrick(Brick brick){
         root.getChildren().remove(brick);
         brickList.remove(brick);
@@ -156,8 +175,12 @@ public class LevelControl {
         brickList.clear();
     }
 
-    public void handleBallMissed(){
+    private void handleBallMissed(){
         //call levelControl.loselife(), then call ball.resetBall() and paddle.resetPaddle()
+        loseLive();
+        System.out.printf("called loselive, now remaining live = %s", lives);
+        ball.resetBall();
+        paddle.resetPaddle();
     }
 
     public boolean levelCleared(){
@@ -168,48 +191,57 @@ public class LevelControl {
         return ball;
     }
 
-    public void checkBallPaddleCollision(double secondDelay){
+    public void checkBallPaddleCollision(double secondDelay, int level){
+        List<Brick> toBeRemoved = new ArrayList<>();
+
         double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
         double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+        //check collision with paddle
         if (newBallY + BALL_RADIUS >= paddle.getY() &&
                 newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight() &&
                 newBallX + BALL_RADIUS >= paddle.getX() &&
                 newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()){
             ball.bounceY();
         }
+        //check collision with each brick remaining on the screen
+        Iterator<Brick> brickListIterator = brickList.iterator();
+        while (brickListIterator.hasNext()) {
+            Brick brick = brickListIterator.next();
+            if (brick.getX()-BALL_RADIUS <= newBallX && newBallX <= brick.getX()+BRICK_WIDTH+BALL_RADIUS
+                    && brick.getY()-BALL_RADIUS <= newBallY && newBallY <= brick.getY()+BRICK_HEIGHT+BALL_RADIUS){
+                //ball is colliding with the brick from some direction (but don't know which)
+                //check if ball is colliding from the top or bottom of the brick
+                if (newBallY+BALL_RADIUS <= brick.getY()+BALL_RADIUS || newBallY-BALL_RADIUS >= brick.getY()+BRICK_HEIGHT-BALL_RADIUS){
+                    ball.bounceY();
+                } else {  //if ball is colliding from the left or right of the brick
+                    ball.bounceX();
+                }
+                brick.gotHit(level);
+                if (brick.hits <= 0){
+                    toBeRemoved.add(brick);
+                    removeBrickItor(brickListIterator);
+                }
+            }
+        }
+        for (Brick brick : toBeRemoved){
+            removeBrick(brick);
+        }
     }
 
-//    public void checkBallBrickCollision(double secondDelay){
-//        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
-//        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
-//        for (Brick brick : brickList) {
-//            if (newBallY + BALL_RADIUS >= brick.getY() &&
-//                    newBallY - BALL_RADIUS <= brick.getY() + Brick.BRICK_HEIGHT &&
-//                    newBallX + BALL_RADIUS >= brick.getX() &&
-//                    newBallX - BALL_RADIUS <= brick.getX() + Brick.BRICK_WIDTH) {
-//                handleBrickCollision(brick);
-//                // Update the ball's position based on the new velocity after collision
-//                newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
-//                newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
-//            }
-//        }
-//
-//    }
+    public boolean checkBallMissed(double secondDelay){
+        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
+        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
 
-//    private void handleBrickCollision(Brick brick) {
-//        // Calculate the normal vector of the brick's surface
-//        double brickCenterX = brick.getX() + Brick.BRICK_WIDTH / 2.0;
-//        double brickCenterY = brick.getY() + Brick.BRICK_HEIGHT / 2.0;
-//        double deltaX = ball.getCenterX() - brickCenterX;
-//        double deltaY = ball.getCenterY() - brickCenterY;
-//
-//        // Calculate the dot product of the ball's velocity vector and the normal vector
-//        double dotProduct = deltaX * ball.getVelocityX() + deltaY * ball.getVelocityY();
-//
-//        // Reflect the velocity vector based on the normal vector
-//        ball.setVelocityX(ball.getVelocityX() - 2 * dotProduct * deltaX);
-//        ball.setVelocityY(ball.getVelocityY() - 2 * dotProduct * deltaY);
-//    }
+        if (newBallY - BALL_RADIUS >= scene.getHeight()){
+            handleBallMissed();
+            System.out.println("BALL MISSED");
+            return true;
+        }
+        return false;
+    }
+
+
+
 
 
 }

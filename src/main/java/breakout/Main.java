@@ -50,33 +50,10 @@ public class Main extends Application {
     public void start (Stage stage) {
         GameControl game = new GameControl();
 
-//        ball = new Ball(20, 20, 10);
-//        ball.setFill(Color.LIGHTSTEELBLUE);
-
-//        paddle = new Paddle(PADDLE_X,PADDLE_Y,PADDLE_WIDTH,PADDLE_HEIGHT);
-//        paddle.setFill(Color.BLACK);
-
-//        paddle = new Paddle(SIZE / 2 - 50, SIZE - 20, 100, 10);
-//        ball = new Ball(SIZE / 2, SIZE - 20 - BALL_RADIUS, BALL_RADIUS, Color.LIGHTSTEELBLUE, SPEED, SPEED);
-//        testBlock = new Brick(50,50,5);
-
-//        root = new Group();
-//        root.getChildren().addAll(ball,paddle,testBlock);
-
-//        Scene scene = new Scene(root, SIZE, SIZE, BACKGROUND);
-//        stage.setScene(scene);
-
-//        stage.setTitle(TITLE);
-//        stage.show();
-//        stage.setResizable(false);
 //
 //        scene.setOnMouseClicked(event -> handleMouseClick());
 //        scene.setOnMouseMoved(event -> handleMouseMove(event));
 
-//        Timeline animation = new Timeline();
-//        animation.setCycleCount(Timeline.INDEFINITE);
-//        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY)));
-//        animation.play();
     }
 
     public static void main(String[] args) {
@@ -93,49 +70,6 @@ public class Main extends Application {
 //        if (!isFirstClick) {
 //            isFirstClick = true;
 //        }
-//    }
-
-
-
-//    private void step(double elapsedTime) {
-////        ball.setCenterX(ball.getCenterX() + SPEED * elapsedTime);
-//        double newBallX = ball.getCenterX() + ball.getVelocityX() * elapsedTime;
-//        double newBallY = ball.getCenterY() + ball.getVelocityY() * elapsedTime;
-//
-//        //checking if ball hits sidelines
-//        if (newBallX - BALL_RADIUS <= 0 || newBallX + BALL_RADIUS >= SIZE) {
-//            ball.setVelocityX(-ball.getVelocityX());
-//        }
-//        if (newBallY - BALL_RADIUS <= 0 || newBallY + BALL_RADIUS >= SIZE) {
-//            ball.setVelocityY(-ball.getVelocityY());
-//        }
-//
-//        // Check if the ball hits the paddle
-//        if (newBallY + BALL_RADIUS >= paddle.getY() &&
-//                newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight() &&
-//                newBallX + BALL_RADIUS >= paddle.getX() &&
-//                newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()) {
-//            // Bounce off the paddle
-//            ball.setVelocityY(-ball.getVelocityY());
-//        }
-//
-//        // Check if the ball hits the brick
-//        if (newBallY - BALL_RADIUS <= testBlock.getY() + testBlock.getHeight() &&
-//                newBallY + BALL_RADIUS >= testBlock.getY() &&
-//                newBallX + BALL_RADIUS >= testBlock.getX() &&
-//                newBallX - BALL_RADIUS <= testBlock.getX() + testBlock.getWidth()) {
-//            // Bounce off the brick
-//            ball.setVelocityY(-ball.getVelocityY());
-//            //the block is hit, remaining hits -= 1
-//            testBlock.gotHit();
-//            if (testBlock.hits == 0){
-//                removeBrick(testBlock);
-//            }
-//        }
-//
-//        // Update the ball's position
-//        ball.setCenterX(newBallX);
-//        ball.setCenterY(newBallY);
 //    }
 
 }

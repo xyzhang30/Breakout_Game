@@ -50,7 +50,6 @@ public class GameControl {
             levelControl.getBall().move(secondDelay);
             levelControl.checkBallPaddleCollision(secondDelay, this.level);
             if (levelControl.checkBallMissed(secondDelay)) {
-                levelControl.loseLive();
                 pauseGame = true;
             }
 

@@ -70,7 +70,6 @@ public class LevelControl {
 
     public void loseLive(){
         this.lives -= 1;
-        System.out.println("lives -= 1 finished");
         updateLivesDisplay();
     }
 
@@ -178,7 +177,6 @@ public class LevelControl {
     private void handleBallMissed(){
         //call levelControl.loselife(), then call ball.resetBall() and paddle.resetPaddle()
         loseLive();
-        System.out.printf("called loselive, now remaining live = %s", lives);
         ball.resetBall();
         paddle.resetPaddle();
     }
@@ -234,7 +232,6 @@ public class LevelControl {
 
         if (newBallY - BALL_RADIUS >= scene.getHeight()){
             handleBallMissed();
-            System.out.println("BALL MISSED");
             return true;
         }
         return false;

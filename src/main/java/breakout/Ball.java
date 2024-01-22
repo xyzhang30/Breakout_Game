@@ -40,7 +40,7 @@ public class Ball extends Circle {
         setCenterX(getCenterX() + velocityX * secondDelay);
         setCenterY(getCenterY() + velocityY * secondDelay);
 
-        if (getCenterX() - getRadius() <= 0 || getCenterX() + getRadius() >= LevelControl.SIZE) {
+        if (getCenterX() - getRadius() <= 0 || getCenterX() + getRadius() >= SIZE) {
             bounceX();
         }
         if (getCenterY() - getRadius() <= 0) {

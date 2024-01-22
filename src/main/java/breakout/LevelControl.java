@@ -2,6 +2,7 @@ package breakout;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -24,6 +25,8 @@ public class LevelControl {
     private Text levelDisplay;
     private List<Brick> brickList; //a list of all the blocks in current level
     private Scene scene;
+    private boolean leftKeyPressed = false;
+    private boolean rightKeyPressed = false;
 
 
     private static final int BRICK_WIDTH = 60;
@@ -46,12 +49,13 @@ public class LevelControl {
     private static final int BALL_INITIAL_X = SIZE / 2;
     private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
     private static final Color BALL_COLOR = Color.LIGHTSTEELBLUE;
+    private static final double PADDLE_SPEED = 5.0; // Adjust the speed as needed
 
 
     public LevelControl(int level){
         this.root = new Group();
         this.brickList = new ArrayList<>();
-        this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT);
+        this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED);
         this.ball = new Ball(BALL_INITIAL_X, BALL_INITIAL_Y, BALL_RADIUS, BALL_COLOR, SPEED, SPEED);
         this.lives = 5;
         this.scene = new Scene(root, SIZE, SIZE, BACKGROUND);
@@ -61,7 +65,35 @@ public class LevelControl {
         setLivesDisplay();
 
         root.getChildren().addAll(ball,paddle,livesDisplay,levelDisplay);
-//        System.out.println("Current Working Directory: " + System.getProperty("user.dir"));
+
+        scene.setOnKeyPressed(this::handleKeyPress);
+        scene.setOnKeyReleased(this::handleKeyRelease);
+    }
+
+    private void handleKeyRelease(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+            case LEFT:
+                leftKeyPressed = false;
+                break;
+            case RIGHT:
+                rightKeyPressed = false;
+                break;
+            // Add other key release events as needed
+        }
+//        if (!leftKeyPressed && !rightKeyPressed) {
+//            paddle.stop();
+//        }
+    }
+
+    private void handleKeyPress(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+            case LEFT:
+                paddle.moveLeft();
+                break;
+            case RIGHT:
+                paddle.moveRight();
+                break;
+        }
     }
 
     public Scene getScene(){
@@ -175,7 +207,6 @@ public class LevelControl {
     }
 
     private void handleBallMissed(){
-        //call levelControl.loselife(), then call ball.resetBall() and paddle.resetPaddle()
         loseLive();
         ball.resetBall();
         paddle.resetPaddle();
@@ -236,9 +267,4 @@ public class LevelControl {
         }
         return false;
     }
-
-
-
-
-
 }

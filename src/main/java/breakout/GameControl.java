@@ -49,12 +49,15 @@ public class GameControl {
         if (levelControl.getPauseGame()){
             return;
         }
+
         levelControl.getBall().move(secondDelay);
         levelControl.checkBallPaddleCollision(secondDelay, this.level);
+
         if (levelControl.checkBallMissed(secondDelay)) {
             levelControl.setPauseGame(true);
             return;
         }
+
         if (levelControl.getLives() <= 0){
             handleGameLost();
         }
@@ -62,6 +65,7 @@ public class GameControl {
         if (levelControl.levelCleared()) {
             nextLevel();
             levelControl = new LevelControl(this.level);
+            stage.setScene(levelControl.getScene());
         }
         if (finishedLastLevel()) {
             handleGameWon();

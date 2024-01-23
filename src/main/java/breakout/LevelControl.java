@@ -26,14 +26,12 @@ public class LevelControl {
     private Text levelDisplay;
     private List<Brick> brickList; //a list of all the blocks in current level
     private Scene scene;
-    private boolean leftKeyPressed = false;
-    private boolean rightKeyPressed = false;
     private boolean pauseGame = false;
+//    private LevelChangeListener levelChangeListener;
 
 
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
-    private static final int BRICK_BORDER_WIDTH = 1;
     private static final int SIZE = 540; //size of the screen
     private static final double SPEED = 200; //initial speed of ball
     private static final int BALL_RADIUS = 10;
@@ -52,10 +50,10 @@ public class LevelControl {
     private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
     private static final Color BALL_COLOR = Color.LIGHTSTEELBLUE;
     private static final double PADDLE_SPEED = 15.0; // Adjust the speed as needed
-    private static final int LIVES_PER_LEVEL = 1;
+    private static final int LIVES_PER_LEVEL = 5;
 
     public LevelControl(int level){
-        System.out.printf("\n playing level %d", level);
+        System.out.printf("\n playing level %d\n", level);
         this.root = new Group();
         this.brickList = new ArrayList<>();
         this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED);
@@ -68,24 +66,14 @@ public class LevelControl {
         setLivesDisplay();
 
         root.getChildren().addAll(ball,paddle,livesDisplay,levelDisplay);
-
-        scene.setOnKeyPressed(this::handleKeyPress);
-        scene.setOnKeyReleased(this::handleKeyRelease);
     }
 
-    private void handleKeyRelease(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-            case LEFT:
-                leftKeyPressed = false;
-                break;
-            case RIGHT:
-                rightKeyPressed = false;
-                break;
-        }
-    }
-
-    private void handleKeyPress(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
+    public void handleKeyPress(KeyCode keyCode) {
+//        if (keyEvent.getCode().isDigitKey()){
+//            System.out.println("digital key pressed");
+//            handleDigitKeyPress(keyEvent);
+//        } else {
+        switch (keyCode) {
             case LEFT:
                 if (!getPauseGame()) {
                     paddle.moveLeft();
@@ -107,8 +95,21 @@ public class LevelControl {
                 paddle.resetPaddle();
                 setPauseGame(true);
                 break;
+            case C:
+                removeAllBricks();
+//            }
         }
     }
+
+//    private void handleDigitKeyPress(KeyEvent keyEvent) {
+//        int numberPressed = Integer.parseInt(keyEvent.getCode().getName());
+//        if (numberPressed == 2) {
+//            if (levelChangeListener != null) {
+//                levelChangeListener.onLevelChange(numberPressed);
+//            }
+//        }
+//    }
+
 
     public Scene getScene(){
         return scene;
@@ -198,9 +199,9 @@ public class LevelControl {
 
     }
 
-    public void restartLevel(){ //for cheatkey
-
-    }
+//    public void restartLevel(){ //for cheatkey
+//
+//    }
 
     private String getLevelFileName(int level) {
         return switch (level) {
@@ -298,4 +299,12 @@ public class LevelControl {
     public void setPauseGame(boolean newPauseGame){
         pauseGame = newPauseGame;
     }
+
+//    public interface LevelChangeListener {
+//        void onLevelChange(int newLevel);
+//    }
+//
+//    public void setLevelChangeListener(LevelChangeListener listener) {
+//        this.levelChangeListener = listener;
+//    }
 }

@@ -32,17 +32,18 @@ public class LevelControl {
 
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
-    private static final int SIZE = 540; //size of the screen
+    public static final int SIZE = 540; //size of the screen
     private static final double SPEED = 200; //initial speed of ball
+    private static final double SLOWED_SPEED_PERCENTAGE = 0.75; //
     private static final int BALL_RADIUS = 10;
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
     private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelThreeBricks";
-    private static final Color BACKGROUND = new Color(0.3,0.3,0.3,1);
+    private static final Color BACKGROUND = new Color(0.3, 0.3, 0.3, 1);
     private static final int LEVEL_FONT_SIZE = 20;
     private static final int LEVEL_TEXT_Y_OFFSET = 20;
     private static final int LEVEL_TEXT_X_OFFSET = 10;
-    private static final int PADDLE_INITIAL_X = SIZE/2-50;
+    private static final int PADDLE_INITIAL_X = SIZE / 2 - 50;
     private static final int PADDLE_INITIAL_Y = SIZE - 20;
     private static final int PADDLE_WIDTH = 100;
     private static final int PADDLE_HEIGHT = 10;
@@ -52,7 +53,7 @@ public class LevelControl {
     private static final double PADDLE_SPEED = 15.0; // Adjust the speed as needed
     private static final int LIVES_PER_LEVEL = 5;
 
-    public LevelControl(int level){
+    public LevelControl(int level) {
         System.out.printf("\n playing level %d\n", level);
         this.root = new Group();
         this.brickList = new ArrayList<>();
@@ -65,7 +66,7 @@ public class LevelControl {
         setLevelDisplay(level);
         setLivesDisplay();
 
-        root.getChildren().addAll(ball,paddle,livesDisplay,levelDisplay);
+        root.getChildren().addAll(ball, paddle, livesDisplay, levelDisplay);
     }
 
     public void handleKeyPress(KeyCode keyCode) {
@@ -97,7 +98,9 @@ public class LevelControl {
                 break;
             case C:
                 removeAllBricks();
-//            }
+            case S:
+                ball.setVelocityX(ball.getVelocityX()*SLOWED_SPEED_PERCENTAGE);
+                ball.setVelocityY(ball.getVelocityY()*SLOWED_SPEED_PERCENTAGE);
         }
     }
 
@@ -111,11 +114,11 @@ public class LevelControl {
 //    }
 
 
-    public Scene getScene(){
+    public Scene getScene() {
         return scene;
     }
 
-    public void loseLive(){
+    public void loseLive() {
         this.lives -= 1;
         updateLivesDisplay();
     }
@@ -126,12 +129,12 @@ public class LevelControl {
         root.getChildren().add(livesDisplay);
     }
 
-    public void increaseLife(){
+    public void increaseLife() {
         this.lives += 1;
         updateLivesDisplay();
     }
 
-    public void setLevelDisplay(int level){
+    public void setLevelDisplay(int level) {
         String displayText = "Level ";
         String levelText = Integer.toString(level);
         String completeDisplayText = displayText.concat(levelText);
@@ -145,7 +148,7 @@ public class LevelControl {
         levelDisplay.setY(LEVEL_TEXT_Y_OFFSET);
     }
 
-    public void setLivesDisplay(){
+    public void setLivesDisplay() {
         //get the text node to display lives on the level screen
         String displayText = "Lives Remaining: ";
         String livesText = Integer.toString(this.lives);
@@ -160,11 +163,7 @@ public class LevelControl {
         livesDisplay.setLayoutY(LEVEL_TEXT_Y_OFFSET);
     }
 
-    public void setLevelDisplay(){
-
-    }
-
-    public void readBrickFormation(int level){
+    public void readBrickFormation(int level) {
         //reads brick formation from datafile and display bricks on the screen when each new level loads
         brickList.clear();
         int rowCount = 0;
@@ -173,7 +172,7 @@ public class LevelControl {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] row = line.split(" ");
-                for (int i = 0; i < row.length; i ++){
+                for (int i = 0; i < row.length; i++) {
                     if (!row[i].equals("0") && !row[i].isEmpty()) {
                         try {
                             int brickX = i * BRICK_WIDTH; //the width of bricks to its left + their borders
@@ -184,24 +183,19 @@ public class LevelControl {
                             newBrick.setFill(brickColor);
                             root.getChildren().add(newBrick);
                             brickList.add(newBrick);
-                        } catch (NumberFormatException e){
+                        } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                rowCount ++;
+                rowCount++;
             }
         } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
             e.printStackTrace();
         }
 
 
     }
-
-//    public void restartLevel(){ //for cheatkey
-//
-//    }
 
     private String getLevelFileName(int level) {
         return switch (level) {
@@ -212,35 +206,35 @@ public class LevelControl {
         };
     }
 
-    public void removeBrickItor(Iterator<Brick> iter){
+    public void removeBrickItor(Iterator<Brick> iter) {
         iter.remove();
     }
 
-    public void removeBrick(Brick brick){
+    public void removeBrick(Brick brick) {
         root.getChildren().remove(brick);
         brickList.remove(brick);
     }
 
-    public void removeAllBricks(){
+    public void removeAllBricks() {
         root.getChildren().removeAll(brickList);
         brickList.clear();
     }
 
-    private void handleBallMissed(){
+    private void handleBallMissed() {
         loseLive();
         ball.resetBall();
         paddle.resetPaddle();
     }
 
-    public boolean levelCleared(){
+    public boolean levelCleared() {
         return brickList.isEmpty();
     }
 
-    public Ball getBall(){
+    public Ball getBall() {
         return ball;
     }
 
-    public void checkBallPaddleCollision(double secondDelay, int level){
+    public void checkBallPaddleCollision(double secondDelay, int level) {
         List<Brick> toBeRemoved = new ArrayList<>();
 
         double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
@@ -249,62 +243,54 @@ public class LevelControl {
         if (newBallY + BALL_RADIUS >= paddle.getY() &&
                 newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight() &&
                 newBallX + BALL_RADIUS >= paddle.getX() &&
-                newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()){
+                newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()) {
             ball.bounceY();
         }
         //check collision with each brick remaining on the screen
         Iterator<Brick> brickListIterator = brickList.iterator();
         while (brickListIterator.hasNext()) {
             Brick brick = brickListIterator.next();
-            if (brick.getX()-BALL_RADIUS <= newBallX && newBallX <= brick.getX()+BRICK_WIDTH+BALL_RADIUS
-                    && brick.getY()-BALL_RADIUS <= newBallY && newBallY <= brick.getY()+BRICK_HEIGHT+BALL_RADIUS){
+            if (brick.getX() - BALL_RADIUS <= newBallX && newBallX <= brick.getX() + BRICK_WIDTH + BALL_RADIUS
+                    && brick.getY() - BALL_RADIUS <= newBallY && newBallY <= brick.getY() + BRICK_HEIGHT + BALL_RADIUS) {
                 //ball is colliding with the brick from some direction (but don't know which)
                 //check if ball is colliding from the top or bottom of the brick
-                if (newBallY+BALL_RADIUS <= brick.getY()+BALL_RADIUS || newBallY-BALL_RADIUS >= brick.getY()+BRICK_HEIGHT-BALL_RADIUS){
+                if (newBallY + BALL_RADIUS <= brick.getY() + BALL_RADIUS || newBallY - BALL_RADIUS >= brick.getY() + BRICK_HEIGHT - BALL_RADIUS) {
                     ball.bounceY();
                 } else {  //if ball is colliding from the left or right of the brick
                     ball.bounceX();
                 }
                 brick.gotHit(level);
-                if (brick.hits <= 0){
+                if (brick.getNumHits() <= 0) {
                     toBeRemoved.add(brick);
                     removeBrickItor(brickListIterator);
                 }
             }
         }
-        for (Brick brick : toBeRemoved){
+        for (Brick brick : toBeRemoved) {
             removeBrick(brick);
         }
     }
 
-    public boolean checkBallMissed(double secondDelay){
+    public boolean checkBallMissed(double secondDelay) {
         double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
         double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
 
-        if (newBallY - BALL_RADIUS >= scene.getHeight()){
+        if (newBallY - BALL_RADIUS >= scene.getHeight()) {
             handleBallMissed();
             return true;
         }
         return false;
     }
 
-    public int getLives(){
+    public int getLives() {
         return lives;
     }
 
-    public boolean getPauseGame(){
+    public boolean getPauseGame() {
         return pauseGame;
     }
 
-    public void setPauseGame(boolean newPauseGame){
+    public void setPauseGame(boolean newPauseGame) {
         pauseGame = newPauseGame;
     }
-
-//    public interface LevelChangeListener {
-//        void onLevelChange(int newLevel);
-//    }
-//
-//    public void setLevelChangeListener(LevelChangeListener listener) {
-//        this.levelChangeListener = listener;
-//    }
 }

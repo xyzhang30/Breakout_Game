@@ -60,17 +60,17 @@ You can put links in like this: [Duke CompSci](https://www.cs.duke.edu)
 
 ## Cheat Key Ideas
 
- * Idea #1: clicking on __L__ increases the current lives by 1
+ * Idea #1: clicking on ```L``` increases the current lives by 1
 
- * Idea #2: clicking on __C__ clears the screen and goes to the next level
+ * Idea #2: clicking on ```C``` clears the screen and goes to the next level
 
  * Idea #3: clicking on __a number (1-9)__ skips current level and goes to the corresponding level, if number pressed is bigger than the highest level, it goes to the highest level.
 
- * Idea #4: clicking on __S__ slows down the ball (easier for the player to react)
+ * Idea #4: clicking on ```S``` slows down the ball (easier for the player to react)
 
- * Idea #5: clicking on __R__ resets the current level (reset the paddle and the ball to the starting position and restart current level)
+ * Idea #5: clicking on ```R``` resets the paddle and the ball to the starting position
 
- * Idea #6: clicking on __P__ skips all levels and wins the game (show winning screen)
+ * Idea #6: clicking on ```P``` skips all levels and wins the game (show winning screen)
 
 ## Level Descriptions
 

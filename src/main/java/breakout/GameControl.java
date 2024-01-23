@@ -77,6 +77,9 @@ public class GameControl {
                         break;
                 }
             }
+            if (keyCode == KeyCode.P){
+                handleGameWon();
+            }
             if (levelControl != null) {
                 levelControl.handleKeyPress(keyCode);
             }

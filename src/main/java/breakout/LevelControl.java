@@ -52,9 +52,10 @@ public class LevelControl {
     private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
     private static final Color BALL_COLOR = Color.LIGHTSTEELBLUE;
     private static final double PADDLE_SPEED = 15.0; // Adjust the speed as needed
-    private static final int LIVES_PER_LEVEL = 10;
+    private static final int LIVES_PER_LEVEL = 1;
 
     public LevelControl(int level){
+        System.out.printf("\n playing level %d", level);
         this.root = new Group();
         this.brickList = new ArrayList<>();
         this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED);
@@ -97,6 +98,10 @@ public class LevelControl {
                 break;
             case SPACE:
                 setPauseGame(!getPauseGame());
+                break;
+            case L:
+                increaseLife();
+                break;
         }
     }
 
@@ -117,6 +122,7 @@ public class LevelControl {
 
     public void increaseLife(){
         this.lives += 1;
+        updateLivesDisplay();
     }
 
     public void setLevelDisplay(int level){
@@ -278,10 +284,6 @@ public class LevelControl {
 
     public int getLives(){
         return lives;
-    }
-
-    public boolean spacePressed(KeyEvent keyEvent) {
-        return keyEvent.getCode() == KeyCode.SPACE;
     }
 
     public boolean getPauseGame(){

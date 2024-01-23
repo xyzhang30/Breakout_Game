@@ -19,6 +19,7 @@ public class GameControl {
     private Stage stage;
     private Timeline animation;
     private boolean gameStarted = false;
+    private boolean skipLevel = false;
 
 
     private static final String TITLE = "Breakout Game";
@@ -47,11 +48,38 @@ public class GameControl {
 
         // Add key press event handler for SPACE key
         startScene.setOnKeyPressed(event -> handleKeyPress(event.getCode()));
+        levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
+
     }
 
-    private void handleKeyPress(KeyCode code) {
-        if (code == KeyCode.SPACE) {
+    private void handleKeyPress(KeyCode keyCode) {
+        if (keyCode == KeyCode.SPACE && !gameStarted) {
             startLevel();
+            gameStarted = true;
+        }
+        if (gameStarted) {
+            if (keyCode.isDigitKey()) {
+                int numberPressed = Integer.parseInt(keyCode.getName());
+                if (numberPressed > 3){
+                    numberPressed = 3;
+                }
+                switch (numberPressed) {
+                    case 1:
+                        setLevel(1);
+                        break;
+                    case 2:
+                        setLevel(2);
+                        break;
+                    case 3:
+                        setLevel(3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (levelControl != null) {
+                levelControl.handleKeyPress(keyCode);
+            }
         }
     }
 
@@ -85,9 +113,10 @@ public class GameControl {
         if (levelControl.levelCleared()) {
 //            handleLevelComplete();
             nextLevel();
-            levelControl = new LevelControl(this.level);
-            stage.setScene(levelControl.getScene());
-            levelControl.setPauseGame(true);
+//            levelControl = new LevelControl(this.level);
+//            stage.setScene(levelControl.getScene());
+//            levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
+//            levelControl.setPauseGame(true);
         }
 //        if (finishedLastLevel()) {
 //            handleGameWon();
@@ -96,13 +125,32 @@ public class GameControl {
 
 
     public void nextLevel(){
-        this.level += 1;
+//        this.level += 1;
+//        levelControl = new LevelControl(this.level);
+//        stage.setScene(levelControl.getScene());
+//        levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
+//        levelControl.setPauseGame(true);
 //        this.levelControl.setLevelDisplay(this.level);
+        setLevel(this.level+1);
     }
 
     public void setLevel(int level){
+//        this.level = level;
+//        levelControl = new LevelControl(this.level);
+//        for (int i = this.level; i < level; i ++){
+//            nextLevel();
+//        }
+        System.out.printf("level passed in: %d",level);
         this.level = level;
+        levelControl = new LevelControl(this.level);
+        System.out.printf("in set level, going to level %d", level);
+        stage.setScene(levelControl.getScene());
+        levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
+        levelControl.setPauseGame(true);
+//        this.levelControl.setLevelDisplay(this.level);
     }
+
+
 
 //    public void handleLevelComplete(){
 //        levelControl.setPauseGame(true);
@@ -138,6 +186,11 @@ public class GameControl {
     public boolean finishedLastLevel(){
         return this.level == LEVELCOUNT;
     }
+
+//    @Override
+//    public void onLevelChange(int newLevel) {
+//        setLevel(newLevel);
+//    }
 
 //    private void handleKeyPress(KeyEvent event) {
 //        if (event.getCode() == KeyCode.SPACE && levelCompleteDisplayed) {

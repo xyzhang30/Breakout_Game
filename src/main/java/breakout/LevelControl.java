@@ -102,6 +102,11 @@ public class LevelControl {
             case L:
                 increaseLife();
                 break;
+            case R:
+                ball.resetBall();
+                paddle.resetPaddle();
+                setPauseGame(true);
+                break;
         }
     }
 

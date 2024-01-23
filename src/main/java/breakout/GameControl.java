@@ -56,7 +56,7 @@ public class GameControl {
     }
 
     private void startLevel() {
-        levelControl.setPauseGame(false);
+        levelControl.setPauseGame(true);
         Scene scene = levelControl.getScene();
         stage.setScene(scene);
     }
@@ -78,16 +78,20 @@ public class GameControl {
             handleGameLost();
             return;
         }
-
+        if (finishedLastLevel() && levelControl.levelCleared()) {
+            handleGameWon();
+            return;
+        }
         if (levelControl.levelCleared()) {
 //            handleLevelComplete();
             nextLevel();
             levelControl = new LevelControl(this.level);
             stage.setScene(levelControl.getScene());
+            levelControl.setPauseGame(true);
         }
-        if (finishedLastLevel()) {
-            handleGameWon();
-        }
+//        if (finishedLastLevel()) {
+//            handleGameWon();
+//        }
     }
 
 
@@ -112,6 +116,13 @@ public class GameControl {
 //    }
 
     public void handleGameWon(){
+        levelControl.setPauseGame(true);
+        displayYouWonScreen();
+    }
+
+    private void displayYouWonScreen() {
+        Scene gameWon = displayControl.youWinScreen();
+        stage.setScene(gameWon);
     }
 
     public void handleGameLost(){

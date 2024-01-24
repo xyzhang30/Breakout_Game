@@ -37,8 +37,9 @@ This project implements the game of Breakout with multiple levels.
  * Data files needed: ```LevelOneBricks```, ```LevelTwoBricks```, ```LevelThreeBricks``` (needs to be in the DataFiles folder under the same directory as the code files, if moved, change the file path in ```levelControl```)
 
  * Key/Mouse inputs: 
-   * ```SPACE```: start/pause game
+   * ```SPACE```: start/pause game, launches the ball at the start of each level
    * ```LEFT```/```RIGHT```: move the paddle to the left/right
+   * _no mouse input_
 
  * Cheat keys:
    * ```L```: adds one life to current level
@@ -63,11 +64,11 @@ This project implements the game of Breakout with multiple levels.
      * multi-hit bricks
      * cross-bomb bricks
      * power-up bricks
-   * 3 powerups (randomly generated on specified bricks)
+   * 3 power-ups (randomly generated on specified bricks)
      * speeding up the ball
      * adding a new ball
      * lengthening the paddle
-   * 6 cheatkeys
+   * 6 cheat-keys
      * increase life
      * skip current level
      * jump to a specific level
@@ -81,11 +82,10 @@ This project implements the game of Breakout with multiple levels.
    * Paddle "catching" the ball 
 
  * Noteworthy Features:
-   * The color of the bricks indicate the hits left to clear it. The lighter the brick color is, the less hit it needs. When a block with multiple hits gets hit, it will change into the color of the next lower hit count.
+   * The color of the bricks indicate the hits left to clear it. The lighter the brick color is, the less hit it needs. When a block with multiple hits gets hit, it changes into the color of the next lower hit count.
 
 
 ### Assignment Impressions
-I really enjoyed the assignment. I think a little game on a graphical interface is a great way to get started to learn to design because it's not boring and it's easy to visualize the complete product.
+I really enjoyed the assignment. I think a little game on a graphical interface is a great way to get started to learn to design projects because it's not boring and it's easy to visualize the changes and edits in the code. I also like how it's not technically challenging so that we could focus more on the designing aspect.
 
-I learned a lot through it, and I found out a lot of things that I still need to learn and improve on. I was really confused on where to start in the beginning, and I thought the second lecture really helped me figure out what parts/classes/methods I need for this project.
-
+I learned a lot through it, and I found out a lot of things that I still need to learn and improve on. I was really confused on where to start in the beginning, and I thought the second lecture really helped me figure out what parts/classes/methods I need for this project. 

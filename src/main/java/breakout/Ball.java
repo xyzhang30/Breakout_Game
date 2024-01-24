@@ -7,7 +7,6 @@ import javafx.scene.shape.Circle;
 public class Ball extends Circle {
     private double velocityX;
     private double velocityY;
-
     public static final int SIZE = 540; //size of the screen
     public static final int BALL_RADIUS = 10;
     private static final int BALL_INITIAL_X = SIZE / 2;

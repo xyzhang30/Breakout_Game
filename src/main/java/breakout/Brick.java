@@ -4,22 +4,31 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
+import java.util.Random;
+
 public class Brick extends Rectangle {
-    int hits;
-    int powerupType;
+    private int hits;
+    private int powerupType = 0; //default to 0
+    private boolean powerup = false; //default to false
+    private boolean explodingBrick = false; //default to false
+
     public static final int BRICK_WIDTH = 60;
     public static final int BRICK_HEIGHT = 35;
     public static final int BRICK_BORDER_WIDTH = 1;
 
-//    public Brick(int Xupperleft, int Yupperleft, int hits, int powerupType){
     public Brick(int Xupperleft, int Yupperleft, int hits){
         super(Xupperleft, Yupperleft, BRICK_WIDTH, BRICK_HEIGHT);
         this.hits = hits;
-        this.setFill(Color.GREY);
+        if (hits == 1){ //all bricks with 3 hits are powerup bricks
+            powerup = true;
+            powerupType = generatePowerupType();
+        }
+        if (hits == 4){
+            explodingBrick = true;
+        }
         this.setStroke(Color.BLACK); // Border color
         this.setStrokeWidth(BRICK_BORDER_WIDTH); // Border width
         this.setStrokeType(StrokeType.INSIDE); // Border position
-
 //        this.powerupType = powerupType;
     }
 
@@ -66,5 +75,25 @@ public class Brick extends Rectangle {
         return Color.web("000000",0);
     }
 
+    public int getNumHits(){
+        return hits;
+    }
 
+    public int generatePowerupType(){
+//        Random random = new Random();
+//        return random.nextInt(3) + 1;
+        return 2;
+    }
+
+    public boolean isExplodingBrick() {
+        return explodingBrick;
+    }
+
+    public boolean isPowerupBrick() {
+        return powerup;
+    }
+
+    public int getPowerupType() {
+        return powerupType;
+    }
 }

@@ -7,7 +7,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,7 +32,11 @@ public class LevelControl {
     private List<Brick> brickList; //a list of all the blocks in current level
     private Scene scene;
     private boolean pauseGame = false;
-//    private LevelChangeListener levelChangeListener;
+    private boolean speedupPowerupObtained = false;
+    private boolean paddlePowerupObtained = false;
+    private boolean addBallPowerupObtained = false;
+    private PowerUpIcon icons = new PowerUpIcon();
+
 
 
     private static final int BRICK_WIDTH = 60;
@@ -35,10 +44,12 @@ public class LevelControl {
     public static final int SIZE = 540; //size of the screen
     private static final double SPEED = 200; //initial speed of ball
     private static final double SLOWED_SPEED_PERCENTAGE = 0.75; //
+    private static final double SPEED_UP_PERCENTAGE = 1.10;
     private static final int BALL_RADIUS = 10;
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
     private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelThreeBricks";
+//    private static final String SPEEDUPICON = ".\\src\\main\\java\\breakout\\speedUpIcon";
     private static final Color BACKGROUND = new Color(0.3, 0.3, 0.3, 1);
     private static final int LEVEL_FONT_SIZE = 20;
     private static final int LEVEL_TEXT_Y_OFFSET = 20;
@@ -46,6 +57,7 @@ public class LevelControl {
     private static final int PADDLE_INITIAL_X = SIZE / 2 - 50;
     private static final int PADDLE_INITIAL_Y = SIZE - 20;
     private static final int PADDLE_WIDTH = 100;
+    private static final double PADDLE_LENGTHEN_PERCENTAGE = 1.5;
     private static final int PADDLE_HEIGHT = 10;
     private static final int BALL_INITIAL_X = SIZE / 2;
     private static final int BALL_INITIAL_Y = SIZE - 20 - BALL_RADIUS;
@@ -92,6 +104,7 @@ public class LevelControl {
                 increaseLife();
                 break;
             case R:
+                prePaddleReset();
                 ball.resetBall();
                 paddle.resetPaddle();
                 setPauseGame(true);
@@ -104,14 +117,11 @@ public class LevelControl {
         }
     }
 
-//    private void handleDigitKeyPress(KeyEvent keyEvent) {
-//        int numberPressed = Integer.parseInt(keyEvent.getCode().getName());
-//        if (numberPressed == 2) {
-//            if (levelChangeListener != null) {
-//                levelChangeListener.onLevelChange(numberPressed);
-//            }
-//        }
-//    }
+    private void prePaddleReset() {
+        paddle.setWidth(PADDLE_WIDTH);
+        paddlePowerupObtained = false;
+        root.getChildren().remove(icons.getPaddleIcon());
+    }
 
 
     public Scene getScene() {
@@ -223,6 +233,7 @@ public class LevelControl {
     private void handleBallMissed() {
         loseLive();
         ball.resetBall();
+        prePaddleReset();
         paddle.resetPaddle();
     }
 
@@ -281,7 +292,10 @@ public class LevelControl {
                 brick.gotHit(level);
                 if (brick.getNumHits() <= 0) {
                     toBeRemoved.add(brick);
-                    if (brick.isExplodingBrick()){
+                    if (brick.isPowerupBrick()){
+                        handlePowerUp(brick);
+                    }
+                    else if (brick.isExplodingBrick()){
                         toBeRemoved.addAll(handleExplode(brick));
                     }
                     removeBrickItor(brickListIterator);
@@ -290,6 +304,26 @@ public class LevelControl {
         }
         for (Brick brick : toBeRemoved) {
             removeBrick(brick);
+        }
+    }
+
+    private void handlePowerUp(Brick brick) {
+        switch (brick.getPowerupType()){
+            case 1: //speeds up the ball by 0.25 times of the current speed (bad powerup), can be sped up multiple times
+                ball.setVelocityX(ball.getVelocityX() * SPEED_UP_PERCENTAGE);
+                ball.setVelocityY(ball.getVelocityY() * SPEED_UP_PERCENTAGE);
+                if (!speedupPowerupObtained) {
+                    root.getChildren().add(icons.getSpeedUpIcon());
+                    speedupPowerupObtained = true;
+                }
+                break;
+            case 2: //lengthens the paddle by 1.25 times the original width, you lose the paddle upgrade upon paddle reset.
+                if (!paddlePowerupObtained){
+                    paddle.setWidth(PADDLE_WIDTH * PADDLE_LENGTHEN_PERCENTAGE);
+                    paddle.setPaddleX(paddle.getX() - ((PADDLE_WIDTH * PADDLE_LENGTHEN_PERCENTAGE)-PADDLE_WIDTH)/2);
+                    root.getChildren().add(icons.getPaddleIcon());
+                    paddlePowerupObtained = true;
+                }
         }
     }
 

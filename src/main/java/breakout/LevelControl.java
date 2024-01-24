@@ -239,12 +239,32 @@ public class LevelControl {
 
         double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
         double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
-        //check collision with paddle
+
+        double leftThird = paddle.getX() + paddle.getWidth() / 3;
+        double rightThird = paddle.getX() + 2 * (paddle.getWidth() / 3);
+
+//        check collision with paddle
         if (newBallY + BALL_RADIUS >= paddle.getY() &&
                 newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight() &&
                 newBallX + BALL_RADIUS >= paddle.getX() &&
                 newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()) {
-            ball.bounceY();
+//            ball.bounceY();
+//            if (newBallY + BALL_RADIUS >= paddle.getY() &&
+//                    newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight()) {
+
+                if (newBallX - BALL_RADIUS <= leftThird) {
+                    // Ball hits left 1/3 of the paddle
+                    ball.bounceY();
+                    ball.bounceX();
+                } else if (newBallX + BALL_RADIUS >= rightThird) {
+                    // Ball hits right 1/3 of the paddle
+                    ball.bounceY();
+                    ball.bounceX();
+                } else if (newBallX - BALL_RADIUS > leftThird && newBallX + BALL_RADIUS < rightThird) {
+                    // Ball hits middle 1/3 of the paddle
+                    ball.bounceY();
+                }
+//            }
         }
         //check collision with each brick remaining on the screen
         Iterator<Brick> brickListIterator = brickList.iterator();
@@ -252,16 +272,18 @@ public class LevelControl {
             Brick brick = brickListIterator.next();
             if (brick.getX() - BALL_RADIUS <= newBallX && newBallX <= brick.getX() + BRICK_WIDTH + BALL_RADIUS
                     && brick.getY() - BALL_RADIUS <= newBallY && newBallY <= brick.getY() + BRICK_HEIGHT + BALL_RADIUS) {
-                //ball is colliding with the brick from some direction (but don't know which)
-                //check if ball is colliding from the top or bottom of the brick
+                //if ball is colliding from the top or bottom of the brick
                 if (newBallY + BALL_RADIUS <= brick.getY() + BALL_RADIUS || newBallY - BALL_RADIUS >= brick.getY() + BRICK_HEIGHT - BALL_RADIUS) {
                     ball.bounceY();
-                } else {  //if ball is colliding from the left or right of the brick
+                } else { //if ball is colliding from the left or right of the brick
                     ball.bounceX();
                 }
                 brick.gotHit(level);
                 if (brick.getNumHits() <= 0) {
                     toBeRemoved.add(brick);
+                    if (brick.isExplodingBrick()){
+                        toBeRemoved.addAll(handleExplode(brick));
+                    }
                     removeBrickItor(brickListIterator);
                 }
             }
@@ -269,6 +291,20 @@ public class LevelControl {
         for (Brick brick : toBeRemoved) {
             removeBrick(brick);
         }
+    }
+
+    private List<Brick> handleExplode(Brick brick) {
+        List<Brick> bricksBombed = new ArrayList<>();
+
+        double brickX = brick.getX();
+        double brickY = brick.getY();
+
+        for (Brick b : brickList){
+            if (b.getY() == brickY || brickX == b.getX()){
+                bricksBombed.add(b);
+            }
+        }
+        return bricksBombed;
     }
 
     public boolean checkBallMissed(double secondDelay) {

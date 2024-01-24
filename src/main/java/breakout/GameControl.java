@@ -1,11 +1,8 @@
 package breakout;
 
 import javafx.animation.KeyFrame;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.animation.Timeline;
 import javafx.util.Duration;

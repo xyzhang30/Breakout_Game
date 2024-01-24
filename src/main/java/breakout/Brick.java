@@ -19,7 +19,7 @@ public class Brick extends Rectangle {
     public Brick(int Xupperleft, int Yupperleft, int hits){
         super(Xupperleft, Yupperleft, BRICK_WIDTH, BRICK_HEIGHT);
         this.hits = hits;
-        if (hits == 1){ //all bricks with 3 hits are powerup bricks
+        if (hits == 2){ //all bricks with 2 hits are powerup bricks
             powerup = true;
             powerupType = generatePowerupType();
         }
@@ -29,7 +29,6 @@ public class Brick extends Rectangle {
         this.setStroke(Color.BLACK); // Border color
         this.setStrokeWidth(BRICK_BORDER_WIDTH); // Border width
         this.setStrokeType(StrokeType.INSIDE); // Border position
-//        this.powerupType = powerupType;
     }
 
     public void gotHit(int level){

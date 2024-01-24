@@ -3,16 +3,10 @@ package breakout;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -37,12 +31,12 @@ public class LevelControl {
     private boolean addBallPowerupObtained = false;
     private PowerUpIcon icons = new PowerUpIcon();
     private Ball powerupBall;
+    public static final int SIZE = 540; //size of the screen //make it public
 
 
 
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
-    public static final int SIZE = 540; //size of the screen
     private static final double SPEED = 200; //initial speed of ball
     private static final double SLOWED_SPEED_PERCENTAGE = 0.75; //
     private static final double SPEED_UP_PERCENTAGE = 1.10;
@@ -128,7 +122,6 @@ public class LevelControl {
         paddlePowerupObtained = false;
         root.getChildren().remove(icons.getPaddleIcon());
     }
-
 
     public Scene getScene() {
         return scene;
@@ -278,9 +271,6 @@ public class LevelControl {
                 newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight() &&
                 newBallX + BALL_RADIUS >= paddle.getX() &&
                 newBallX - BALL_RADIUS <= paddle.getX() + paddle.getWidth()) {
-//            ball.bounceY();
-//            if (newBallY + BALL_RADIUS >= paddle.getY() &&
-//                    newBallY - BALL_RADIUS <= paddle.getY() + paddle.getHeight()) {
 
                 if (newBallX - BALL_RADIUS <= leftThird) {
                     // Ball hits left 1/3 of the paddle
@@ -294,7 +284,6 @@ public class LevelControl {
                     // Ball hits middle 1/3 of the paddle
                     ball.bounceY();
                 }
-//            }
         }
         //check collision with each brick remaining on the screen
         Iterator<Brick> brickListIterator = brickList.iterator();
@@ -350,7 +339,7 @@ public class LevelControl {
                 break;
             case 3: //gets a new ball
                 if (!addBallPowerupObtained) {
-                    powerupBall = new Ball(ball.getCenterX() - BALL_RADIUS - BALL_RADIUS, ball.getCenterY() - BALL_RADIUS - BALL_RADIUS, BALL_RADIUS, Color.BLACK, ball.getVelocityX(), ball.getVelocityY());
+                    powerupBall = new Ball(ball.getCenterX() - BALL_RADIUS - BALL_RADIUS, ball.getCenterY() - BALL_RADIUS - BALL_RADIUS, BALL_RADIUS, BALL_COLOR, ball.getVelocityX(), ball.getVelocityY());
                     root.getChildren().add(powerupBall);
                     addBallPowerupObtained = true;
                     root.getChildren().add(icons.getAddBallIcon());
@@ -376,18 +365,6 @@ public class LevelControl {
         return bricksBombed;
     }
 
-//    public boolean checkBallMissed(double secondDelay) {
-//        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
-//        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
-//
-//        if (newBallY - BALL_RADIUS >= scene.getHeight()) {
-//            if (!powerupBall.stillOnScreen() && !ball.stillOnScreen()) {
-//                handleBallMissed();
-//            }
-//            return true;
-//        }
-//        return false;
-//    }
     public boolean checkBallMissed(double secondDelay) {
         double mainBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
         double mainBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;

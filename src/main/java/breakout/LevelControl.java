@@ -36,6 +36,7 @@ public class LevelControl {
     private boolean paddlePowerupObtained = false;
     private boolean addBallPowerupObtained = false;
     private PowerUpIcon icons = new PowerUpIcon();
+    private Ball powerupBall;
 
 
 
@@ -108,12 +109,17 @@ public class LevelControl {
                 ball.resetBall();
                 paddle.resetPaddle();
                 setPauseGame(true);
+                removeExtraBall();
                 break;
             case C:
                 removeAllBricks();
             case S:
                 ball.setVelocityX(ball.getVelocityX()*SLOWED_SPEED_PERCENTAGE);
                 ball.setVelocityY(ball.getVelocityY()*SLOWED_SPEED_PERCENTAGE);
+                if (addBallPowerupObtained) {
+                    powerupBall.setVelocityX(powerupBall.getVelocityX() * SLOWED_SPEED_PERCENTAGE);
+                    powerupBall.setVelocityY(powerupBall.getVelocityY() * SLOWED_SPEED_PERCENTAGE);
+                }
         }
     }
 
@@ -235,6 +241,19 @@ public class LevelControl {
         ball.resetBall();
         prePaddleReset();
         paddle.resetPaddle();
+        removeExtraBall();
+        removeSpeedup();
+    }
+
+    private void removeExtraBall(){
+        addBallPowerupObtained = false;
+        root.getChildren().remove(powerupBall);
+        root.getChildren().remove(icons.getAddBallIcon());
+    }
+
+    private void removeSpeedup(){
+        speedupPowerupObtained = false;
+        root.getChildren().remove(icons.getSpeedUpIcon());
     }
 
     public boolean levelCleared() {
@@ -245,7 +264,7 @@ public class LevelControl {
         return ball;
     }
 
-    public void checkBallPaddleCollision(double secondDelay, int level) {
+    public void checkBallPaddleCollision(double secondDelay, int level, Ball ball) {
         List<Brick> toBeRemoved = new ArrayList<>();
 
         double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
@@ -312,6 +331,10 @@ public class LevelControl {
             case 1: //speeds up the ball by 0.25 times of the current speed (bad powerup), can be sped up multiple times
                 ball.setVelocityX(ball.getVelocityX() * SPEED_UP_PERCENTAGE);
                 ball.setVelocityY(ball.getVelocityY() * SPEED_UP_PERCENTAGE);
+                if (addBallPowerupObtained) {
+                    powerupBall.setVelocityX(powerupBall.getVelocityX() * SPEED_UP_PERCENTAGE);
+                    powerupBall.setVelocityY(powerupBall.getVelocityY() * SPEED_UP_PERCENTAGE);
+                }
                 if (!speedupPowerupObtained) {
                     root.getChildren().add(icons.getSpeedUpIcon());
                     speedupPowerupObtained = true;
@@ -324,7 +347,19 @@ public class LevelControl {
                     root.getChildren().add(icons.getPaddleIcon());
                     paddlePowerupObtained = true;
                 }
+                break;
+            case 3: //gets a new ball
+                if (!addBallPowerupObtained) {
+                    powerupBall = new Ball(ball.getCenterX() - BALL_RADIUS - BALL_RADIUS, ball.getCenterY() - BALL_RADIUS - BALL_RADIUS, BALL_RADIUS, Color.BLACK, ball.getVelocityX(), ball.getVelocityY());
+                    root.getChildren().add(powerupBall);
+                    addBallPowerupObtained = true;
+                    root.getChildren().add(icons.getAddBallIcon());
+                }
         }
+    }
+
+    public boolean gotBallPowerup(){
+        return addBallPowerupObtained;
     }
 
     private List<Brick> handleExplode(Brick brick) {
@@ -341,11 +376,30 @@ public class LevelControl {
         return bricksBombed;
     }
 
+//    public boolean checkBallMissed(double secondDelay) {
+//        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
+//        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+//
+//        if (newBallY - BALL_RADIUS >= scene.getHeight()) {
+//            if (!powerupBall.stillOnScreen() && !ball.stillOnScreen()) {
+//                handleBallMissed();
+//            }
+//            return true;
+//        }
+//        return false;
+//    }
     public boolean checkBallMissed(double secondDelay) {
-        double newBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
-        double newBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+        double mainBallX = ball.getCenterX() + ball.getVelocityX() * secondDelay;
+        double mainBallY = ball.getCenterY() + ball.getVelocityY() * secondDelay;
+        boolean mainBallOffScreen = mainBallY - BALL_RADIUS >= scene.getHeight();
 
-        if (newBallY - BALL_RADIUS >= scene.getHeight()) {
+        boolean powerupBallOffScreen = true;
+        if (addBallPowerupObtained && powerupBall != null) {
+            double powerupBallY = powerupBall.getCenterY() + powerupBall.getVelocityY() * secondDelay;
+            powerupBallOffScreen = powerupBallY - BALL_RADIUS >= scene.getHeight();
+        }
+
+        if (mainBallOffScreen && powerupBallOffScreen) {
             handleBallMissed();
             return true;
         }
@@ -362,5 +416,9 @@ public class LevelControl {
 
     public void setPauseGame(boolean newPauseGame) {
         pauseGame = newPauseGame;
+    }
+
+    public Ball getPowerupBall(){
+        return powerupBall;
     }
 }

@@ -98,7 +98,11 @@ public class GameControl {
         }
 
         levelControl.getBall().move(secondDelay);
-        levelControl.checkBallPaddleCollision(secondDelay, this.level);
+        levelControl.checkBallPaddleCollision(secondDelay, this.level, levelControl.getBall());
+        if (levelControl.gotBallPowerup()){
+            levelControl.getPowerupBall().move(secondDelay);
+            levelControl.checkBallPaddleCollision(secondDelay, this.level, levelControl.getPowerupBall());
+        }
 
         if (levelControl.checkBallMissed(secondDelay)) {
             levelControl.setPauseGame(true);
@@ -128,25 +132,12 @@ public class GameControl {
 
 
     public void nextLevel(){
-//        this.level += 1;
-//        levelControl = new LevelControl(this.level);
-//        stage.setScene(levelControl.getScene());
-//        levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
-//        levelControl.setPauseGame(true);
-//        this.levelControl.setLevelDisplay(this.level);
         setLevel(this.level+1);
     }
 
     public void setLevel(int level){
-//        this.level = level;
-//        levelControl = new LevelControl(this.level);
-//        for (int i = this.level; i < level; i ++){
-//            nextLevel();
-//        }
-        System.out.printf("level passed in: %d",level);
         this.level = level;
         levelControl = new LevelControl(this.level);
-        System.out.printf("in set level, going to level %d", level);
         stage.setScene(levelControl.getScene());
         levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
         levelControl.setPauseGame(true);
@@ -189,51 +180,5 @@ public class GameControl {
     public boolean finishedLastLevel(){
         return this.level == LEVELCOUNT;
     }
-
-//    @Override
-//    public void onLevelChange(int newLevel) {
-//        setLevel(newLevel);
-//    }
-
-//    private void handleKeyPress(KeyEvent event) {
-//        if (event.getCode() == KeyCode.SPACE && levelCompleteDisplayed) {
-//            levelCompleteDisplayed = false;
-//            nextLevel();
-//            levelControl = new LevelControl(this.level);
-//            stage.setScene(levelControl.getScene());
-//        }
-//    }
-
-
-    //OLD CONSTRUCTOR, JUST IN CASE THE NEW ONE BREAK
-    //    public GameControl(){
-//        stage = new Stage();
-//        setLevel(1);
-//        displayControl = new DisplayControl();
-//        levelControl = new LevelControl(this.level);
-//
-//        if (!gameStarted) {
-//            Scene startScene = displayControl.startOfGameScreen();
-//            stage.setScene(startScene);
-//            levelControl.setPauseGame(true);
-//        } else {
-//            Scene scene = levelControl.getScene();
-//            stage.setScene(scene);
-//        }
-//
-//        stage.setTitle(TITLE);
-//        stage.show();
-//        stage.setResizable(false);
-//
-//        animation = new Timeline();
-//        animation.setCycleCount(Timeline.INDEFINITE);
-//        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY)));
-//        animation.play();
-//
-//        gameStarted = true;
-//        System.out.printf("levelnum %d", level);
-//    }
-
-
 
 }

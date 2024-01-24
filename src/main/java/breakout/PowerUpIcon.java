@@ -1,5 +1,6 @@
 package breakout;
 
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Polygon;
 
@@ -7,10 +8,12 @@ public class PowerUpIcon {
 
     private Rectangle paddleIcon;
     private Polygon speedUpIcon;
+    private Circle addBallIcon;
 
     public PowerUpIcon(){
         setPaddleIcon();
         setSpeedUpIcon();
+        setAddBallIcon();
     }
 
     public void setPaddleIcon(){
@@ -38,4 +41,14 @@ public class PowerUpIcon {
         return speedUpIcon;
     }
 
+    public Circle getAddBallIcon() {
+        return addBallIcon;
+    }
+
+    public void setAddBallIcon() {
+        addBallIcon = new Circle();
+        addBallIcon.setCenterX(230);
+        addBallIcon.setCenterY(15);
+        addBallIcon.setRadius(5);
+    }
 }

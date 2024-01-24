@@ -80,9 +80,8 @@ public class Brick extends Rectangle {
     }
 
     public int generatePowerupType(){
-//        Random random = new Random();
-//        return random.nextInt(3) + 1;
-        return 2;
+        Random random = new Random();
+        return random.nextInt(3) + 1;
     }
 
     public boolean isExplodingBrick() {

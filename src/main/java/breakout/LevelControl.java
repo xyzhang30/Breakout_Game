@@ -77,10 +77,6 @@ public class LevelControl {
     }
 
     public void handleKeyPress(KeyCode keyCode) {
-//        if (keyEvent.getCode().isDigitKey()){
-//            System.out.println("digital key pressed");
-//            handleDigitKeyPress(keyEvent);
-//        } else {
         switch (keyCode) {
             case LEFT:
                 if (!getPauseGame()) {

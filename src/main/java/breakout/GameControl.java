@@ -16,8 +16,6 @@ public class GameControl {
     private Stage stage;
     private Timeline animation;
     private boolean gameStarted = false;
-    private boolean skipLevel = false;
-
 
     private static final String TITLE = "Breakout Game";
     private static final int FRAMES_PER_SECOND = 60;
@@ -115,16 +113,8 @@ public class GameControl {
             return;
         }
         if (levelControl.levelCleared()) {
-//            handleLevelComplete();
             nextLevel();
-//            levelControl = new LevelControl(this.level);
-//            stage.setScene(levelControl.getScene());
-//            levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
-//            levelControl.setPauseGame(true);
         }
-//        if (finishedLastLevel()) {
-//            handleGameWon();
-//        }
     }
 
 
@@ -138,21 +128,8 @@ public class GameControl {
         stage.setScene(levelControl.getScene());
         levelControl.getScene().setOnKeyPressed(event -> handleKeyPress(event.getCode()));
         levelControl.setPauseGame(true);
-//        this.levelControl.setLevelDisplay(this.level);
     }
 
-
-
-//    public void handleLevelComplete(){
-//        levelControl.setPauseGame(true);
-//        displayLevelCompleteScreen();
-//        levelCompleteDisplayed = true;
-//    }
-
-//    private void displayLevelCompleteScreen() {
-//        Scene levelComplete = displayControl.levelCompleteScreen();
-//        stage.setScene(levelComplete);
-//    }
 
     public void handleGameWon(){
         levelControl.setPauseGame(true);

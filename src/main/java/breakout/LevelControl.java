@@ -32,9 +32,6 @@ public class LevelControl {
     private PowerUpIcon icons = new PowerUpIcon();
     private Ball powerupBall;
     public static final int SIZE = 540; //size of the screen //make it public
-
-
-
     private static final int BRICK_WIDTH = 60;
     private static final int BRICK_HEIGHT = 35;
     private static final double SPEED = 200; //initial speed of ball
@@ -44,7 +41,6 @@ public class LevelControl {
     private static final String LEVEL1 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelOneBricks";
     private static final String LEVEL2 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelTwoBricks";
     private static final String LEVEL3 = ".\\src\\main\\java\\breakout\\DataFiles\\LevelThreeBricks";
-//    private static final String SPEEDUPICON = ".\\src\\main\\java\\breakout\\speedUpIcon";
     private static final Color BACKGROUND = new Color(0.3, 0.3, 0.3, 1);
     private static final int LEVEL_FONT_SIZE = 20;
     private static final int LEVEL_TEXT_Y_OFFSET = 20;
@@ -61,7 +57,6 @@ public class LevelControl {
     private static final int LIVES_PER_LEVEL = 5;
 
     public LevelControl(int level) {
-        System.out.printf("\n playing level %d\n", level);
         this.root = new Group();
         this.brickList = new ArrayList<>();
         this.paddle = new Paddle(PADDLE_INITIAL_X, PADDLE_INITIAL_Y, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED);

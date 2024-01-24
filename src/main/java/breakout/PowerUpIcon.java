@@ -10,6 +10,15 @@ public class PowerUpIcon {
     private Polygon speedUpIcon;
     private Circle addBallIcon;
 
+    private static final int PADDLE_ICON_X = 200;
+    private static final int PADDLE_ICON_Y = 13;
+    private static final int PADDLE_ICON_WIDTH = 10;
+    private static final int PADDLE_ICON_HEIGHT = 4;
+    private static final int BALL_ICON_CENTER_X = 230;
+    private static final int BALL_ICON_CENTER_Y = 15;
+    private static final int BALL_ICON_RADIUS = 5;
+
+
     public PowerUpIcon(){
         setPaddleIcon();
         setSpeedUpIcon();
@@ -18,10 +27,10 @@ public class PowerUpIcon {
 
     public void setPaddleIcon(){
         paddleIcon = new Rectangle();
-        paddleIcon.setX(200);
-        paddleIcon.setY(13);
-        paddleIcon.setWidth(10);
-        paddleIcon.setHeight(4);
+        paddleIcon.setX(PADDLE_ICON_X);
+        paddleIcon.setY(PADDLE_ICON_Y);
+        paddleIcon.setWidth(PADDLE_ICON_WIDTH);
+        paddleIcon.setHeight(PADDLE_ICON_HEIGHT);
     }
 
     public Rectangle getPaddleIcon(){
@@ -47,8 +56,8 @@ public class PowerUpIcon {
 
     public void setAddBallIcon() {
         addBallIcon = new Circle();
-        addBallIcon.setCenterX(230);
-        addBallIcon.setCenterY(15);
-        addBallIcon.setRadius(5);
+        addBallIcon.setCenterX(BALL_ICON_CENTER_X);
+        addBallIcon.setCenterY(BALL_ICON_CENTER_Y);
+        addBallIcon.setRadius(BALL_ICON_RADIUS);
     }
 }

@@ -12,15 +12,7 @@ This project implements the game of Breakout with multiple levels.
 
  * Finish Date: January 23, 2024
 
- * Hours Spent: (including time spend trying to figure out how javafx works)
-1/14 (4-5); 
-1/15 (5-6); 
-1/16 (5-6); 
-1/19 (6-7); 
-1/20 (8); 
-1/21 (9-10);
-1/22 (5-6)
-1/23
+ * Hours Spent: (including time spend trying to figure out how javafx works) ~45 hours
 
 
 ### Attributions
@@ -52,23 +44,48 @@ This project implements the game of Breakout with multiple levels.
    * ```L```: adds one life to current level
    * ```R```: resets the ball and paddle to initial position
    * ```C```: clears current level and goes to the next level
-
+   * ```S```: slows doesn the ball(s)
+   * ```P```: skips all levels and wins the game
+   * ```1``` - ```9```: goes to the corresponding level; goes to the last level if number input is greater than the number of existing levels
 
 ### Notes/Assumptions
 
  * Assumptions or Simplifications:
+   * The maximum columns of bricks is 9 for every level (unless you change ```BRICK_WIDTH```)
+   * Game window is set to be not resizeable
 
  * Known Bugs:
-   * If the ball comes in contact with the paddle at a weird angle, it'll get stuck inside the paddle and bounce up instead of falling off the screen
+   * If the ball comes in contact with the paddle at one specific angle (almost horizontally), it might get stuck inside the paddle and bounce up instead of falling off the screen
 
- * Features implemented:
+ * Features implemented: 
+   * 3 Levels
+   * 3 Different brick types 
+     * multi-hit bricks
+     * cross-bomb bricks
+     * power-up bricks
+   * 3 powerups (randomly generated on specified bricks)
+     * speeding up the ball
+     * adding a new ball
+     * lengthening the paddle
+   * 6 cheatkeys
+     * increase life
+     * skip current level
+     * jump to a specific level
+     * win the game
+     * slow down the ball
+     * resets paddle and ball
+   * 1 paddle behavior
+     * ball bouncing differently on different parts of the paddle
 
  * Features unimplemented:
+   * Paddle "catching" the ball 
 
  * Noteworthy Features:
    * The color of the bricks indicate the hits left to clear it. The lighter the brick color is, the less hit it needs. When a block with multiple hits gets hit, it will change into the color of the next lower hit count.
 
 
 ### Assignment Impressions
+I really enjoyed the assignment. I think a little game on a graphical interface is a great way to get started to learn to design because it's not boring and it's easy to visualize the complete product.
 
+I learned a lot through it, and I found out a lot of things that I still need to learn and improve on. I was really confused on where to start in the beginning, and I thought the second lecture really helped me figure out what parts/classes/methods I need for this project.
 
